@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khôi Phục Mật Khẩu | Bongda888.VN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { slate: { 950: '#020617', 900: '#0f172a', 800: '#1e293b' }, brand: { blue: '#3b82f6', green: '#10b981' } } } }
+        }
+    </script>
+    <style>body { background-color: #020617; color: #f8fafc; }</style>
+</head>
+<body class="antialiased flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-md bg-slate-900 rounded-2xl border border-slate-800 p-8 shadow-2xl relative overflow-hidden">
+        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-brand-blue to-transparent opacity-50"></div>
+
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-800 border border-slate-700 mb-4 shadow-inner">
+                <i class="ph-duotone ph-lock-key text-3xl text-brand-blue"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-white tracking-tight">Quên mật khẩu?</h2>
+            <p class="text-sm text-gray-400 mt-2 leading-relaxed px-4">
+                Đừng lo lắng! Hãy nhập email bạn đã đăng ký, chúng tôi sẽ gửi liên kết để đặt lại mật khẩu mới.
+            </p>
+        </div>
+
+        <div id="messageBox" class="hidden mb-5 p-4 rounded-lg text-sm font-medium text-center shadow-lg transition-all duration-300"></div>
+
+        <form id="resetForm" class="space-y-6">
+            <div>
+                <label class="block text-sm font-medium text-gray-300 mb-2">Địa chỉ Email</label>
+                <div class="relative group">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors group-focus-within:text-brand-blue">
+                        <i class="ph ph-envelope-simple text-gray-400 text-xl group-focus-within:text-brand-blue transition-colors"></i>
+                    </div>
+                    <input type="email" id="email" required 
+                           class="w-full bg-slate-800 border border-slate-700 text-white rounded-xl pl-12 pr-4 py-3.5 focus:outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 transition-all shadow-inner placeholder-gray-500" 
+                           placeholder="Nhập email của bạn...">
+                </div>
+            </div>
+
+            <button type="submit" id="submitBtn" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-3.5 rounded-xl transition-all hover:shadow-lg hover:shadow-blue-500/25 flex justify-center items-center gap-2 transform active:scale-[0.98]">
+                Gửi Liên Kết Khôi Phục <i class="ph-bold ph-paper-plane-right"></i>
+            </button>
+        </form>
+
+        <div class="mt-8 text-center text-sm">
+            <a href="login.html" class="inline-flex items-center gap-1 text-gray-400 hover:text-white font-medium transition-colors">
+                <i class="ph-bold ph-arrow-left"></i> Quay lại Đăng nhập
+            </a>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAuth, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+        // Cấu hình Firebase của bạn
+        const firebaseConfig = {
+            apiKey: "AIzaSyBIamnJhv5opEZ3D9dAJOWbW0YEBgSPPTc",
+            authDomain: "bongda888.firebaseapp.com",
+            projectId: "bongda888",
+            storageBucket: "bongda888.firebasestorage.app",
+            messagingSenderId: "341048440291",
+            appId: "1:341048440291:web:f87f61b46b0f188c4a1cd6",
+            measurementId: "G-4R3DDMMZ3K"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        const resetForm = document.getElementById('resetForm');
+        const messageBox = document.getElementById('messageBox');
+        const submitBtn = document.getElementById('submitBtn');
+
+        resetForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim();
+
+            submitBtn.innerHTML = '<i class="ph ph-spinner-gap animate-spin text-xl"></i> Đang gửi...';
+            submitBtn.disabled = true;
+
+            sendPasswordResetEmail(auth, email)
+                .then(() => {
+                    showMessage("Thành công! Vui lòng kiểm tra hộp thư Email của bạn (bao gồm cả thư mục Spam) để đặt lại mật khẩu.", "success");
+                    submitBtn.innerHTML = 'Đã Gửi Liên Kết <i class="ph-bold ph-check"></i>';
+                    submitBtn.classList.replace('bg-brand-blue', 'bg-brand-green');
+                    submitBtn.classList.replace('hover:bg-blue-600', 'hover:bg-green-600');
+                    
+                    // Reset lại nút sau 5 giây
+                    setTimeout(() => {
+                        submitBtn.innerHTML = 'Gửi Lại Liên Kết <i class="ph-bold ph-paper-plane-right"></i>';
+                        submitBtn.disabled = false;
+                        submitBtn.classList.replace('bg-brand-green', 'bg-brand-blue');
+                        submitBtn.classList.replace('hover:bg-green-600', 'hover:bg-blue-600');
+                    }, 5000);
+                })
+                .catch((error) => {
+                    submitBtn.innerHTML = 'Gửi Liên Kết Khôi Phục <i class="ph-bold ph-paper-plane-right"></i>';
+                    submitBtn.disabled = false;
+                    
+                    let errorMsg = "Không thể gửi email. Vui lòng thử lại!";
+                    if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-email') {
+                        errorMsg = "Email này chưa được đăng ký trong hệ thống.";
+                    }
+                    if (error.code === 'auth/too-many-requests') {
+                        errorMsg = "Bạn đã yêu cầu quá nhiều lần. Vui lòng đợi một lát rồi thử lại.";
+                    }
+                    
+                    showMessage(errorMsg, "error");
+                });
+        });
+
+        function showMessage(msg, type) {
+            messageBox.innerHTML = msg;
+            messageBox.classList.remove('hidden', 'bg-red-500/10', 'text-red-400', 'bg-green-500/10', 'text-brand-green', 'border', 'border-red-500/20', 'border-green-500/20');
+            
+            if (type === 'error') {
+                messageBox.innerHTML = `<div class="flex items-center justify-center gap-2"><i class="ph-fill ph-warning-circle text-lg"></i> ${msg}</div>`;
+                messageBox.classList.add('bg-red-500/10', 'text-red-400', 'border', 'border-red-500/20');
+            } else {
+                messageBox.innerHTML = `<div class="flex items-start text-left gap-2"><i class="ph-fill ph-check-circle text-xl mt-0.5"></i> <span>${msg}</span></div>`;
+                messageBox.classList.add('bg-green-500/10', 'text-brand-green', 'border', 'border-green-500/20');
+            }
+        }
+    </script>
+</body>
+</html>
