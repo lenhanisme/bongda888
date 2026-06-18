@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ | Bongda888.VN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { slate: { 950: '#020617', 900: '#0f172a', 800: '#1e293b' }, brand: { blue: '#3b82f6', green: '#10b981', yellow: '#fbbf24' } } } }
+        }
+    </script>
+    <style>
+        body { background-color: #020617; color: #f8fafc; }
+        .glass-nav { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        /* Ẩn scrollbar cho đẹp */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col hidden" id="mainBody">
+
+    <nav class="fixed top-0 w-full z-50 glass-nav h-16">
+        <div class="max-w-7xl mx-auto px-4 h-full flex items-center justify-between">
+            <a href="home.html" class="flex items-center gap-2">
+                <i class="ph-fill ph-soccer-ball text-2xl text-brand-blue"></i>
+                <span class="text-xl font-bold tracking-tight hidden sm:block">Bongda888</span>
+            </a>
+            
+            <div class="flex items-center gap-4 sm:gap-6">
+                <div class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg flex items-center gap-2 shadow-inner">
+                    <i class="ph-fill ph-coins text-brand-yellow text-lg"></i>
+                    <span class="font-bold text-sm" id="userBalanceDisplay">0</span> <span class="text-xs text-gray-400">Xu</span>
+                </div>
+                
+                <a href="naptien.html" class="bg-brand-blue hover:bg-blue-600 text-white text-sm font-semibold px-4 py-1.5 rounded-lg transition flex items-center gap-1 shadow-lg shadow-blue-500/20">
+                    <i class="ph-bold ph-plus"></i> Nạp
+                </a>
+
+                <div class="h-6 w-px bg-slate-700"></div> <div class="flex items-center gap-3">
+                    <div class="text-right hidden md:block">
+                        <div class="text-sm font-semibold text-white" id="userEmailDisplay">Đang tải...</div>
+                        <div class="text-xs text-brand-green">Trạng thái: Online</div>
+                    </div>
+                    <button id="logoutBtn" class="text-gray-400 hover:text-red-400 transition" title="Đăng xuất">
+                        <i class="ph-bold ph-sign-out text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow pt-24 pb-12 px-4 max-w-7xl mx-auto w-full">
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <div class="md:col-span-2 bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl border border-slate-700 p-6 relative overflow-hidden flex flex-col justify-center">
+                <i class="ph-duotone ph-trophy text-9xl absolute -right-4 -bottom-4 text-white opacity-5"></i>
+                <h1 class="text-2xl sm:text-3xl font-extrabold mb-2 text-white relative z-10">Sôi động cùng World Cup 2026!</h1>
+                <p class="text-gray-400 text-sm mb-4 relative z-10 max-w-lg">Tham gia dự đoán các trận đấu đỉnh cao, rinh hàng ngàn Xu thưởng mỗi ngày. Đừng quên nạp thêm Xu qua VietQR để không bỏ lỡ kèo thơm.</p>
+                <div class="relative z-10">
+                    <a href="#live-matches" class="inline-flex items-center gap-2 bg-white text-slate-900 hover:bg-gray-200 font-semibold px-5 py-2.5 rounded-lg transition text-sm">
+                        Xem bảng kèo <i class="ph-bold ph-arrow-down"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 rounded-2xl border border-slate-700 p-6 flex flex-col items-center justify-center text-center hover:border-brand-yellow transition">
+                <div class="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mb-4">
+                    <i class="ph-fill ph-gift text-4xl text-brand-yellow"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-1">Quà Đăng Nhập</h3>
+                <p class="text-xs text-gray-400 mb-4">Nhận ngay 500 Xu miễn phí mỗi ngày</p>
+                <button id="claimGiftBtn" class="w-full bg-brand-yellow hover:bg-yellow-500 text-slate-900 font-bold py-2.5 rounded-lg transition shadow-lg shadow-yellow-500/20">
+                    Nhận 500 Xu Ngay
+                </button>
+                <p id="giftMessage" class="text-xs text-brand-green mt-3 hidden font-medium"></p>
+            </div>
+        </div>
+
+        <section id="live-matches">
+            <div class="flex justify-between items-end mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold flex items-center gap-2 text-white">
+                        <i class="ph-fill ph-fire text-red-500"></i> Kèo Hot World Cup
+                    </h2>
+                    <p class="text-gray-400 text-sm mt-1">Lịch thi đấu và dự đoán (Cập nhật Real-time)</p>
+                </div>
+            </div>
+
+            <div id="matches-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="col-span-full text-center py-10">
+                    <i class="ph ph-spinner-gap animate-spin text-4xl text-brand-blue mx-auto mb-2"></i>
+                    <p class="text-gray-400">Đang tải dữ liệu trận đấu...</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="predictionModal" class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 opacity-0 transition-opacity">
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-md overflow-hidden transform scale-95 transition-transform duration-200" id="modalContent">
+            <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-800/50">
+                <h3 class="font-bold text-lg">Xác Nhận Dự Đoán</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-white"><i class="ph-bold ph-x text-xl"></i></button>
+            </div>
+            <div class="p-6">
+                <div id="modalMatchInfo" class="text-center font-bold text-xl mb-6">Việt Nam vs Thái Lan</div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm text-gray-400 mb-2">Chọn kết quả:</label>
+                    <div class="grid grid-cols-3 gap-2" id="betOptions">
+                        <button onclick="selectBet('Home')" id="btnHome" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 py-2 rounded font-bold text-sm transition">Chủ nhà</button>
+                        <button onclick="selectBet('Draw')" id="btnDraw" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 py-2 rounded font-bold text-sm transition">Hòa</button>
+                        <button onclick="selectBet('Away')" id="btnAway" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 py-2 rounded font-bold text-sm transition">Đội khách</button>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm text-gray-400 mb-2">Số Xu đặt cược:</label>
+                    <div class="relative">
+                        <i class="ph-fill ph-coins absolute left-3 top-1/2 transform -translate-y-1/2 text-brand-yellow text-lg"></i>
+                        <input type="number" id="betAmount" min="100" placeholder="Tối thiểu 100 Xu" class="w-full bg-slate-800 border border-slate-700 text-white rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition">
+                    </div>
+                    <p id="betError" class="text-red-400 text-xs mt-2 hidden"></p>
+                </div>
+
+                <button onclick="confirmBet()" id="confirmBetBtn" class="w-full bg-brand-green hover:bg-green-600 text-white font-bold py-3 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed">
+                    Chốt Dự Đoán
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+        // CẤU HÌNH FIREBASE
+        const firebaseConfig = {
+            apiKey: "AIzaSyBIamnJhv5opEZ3D9dAJOWbW0YEBgSPPTc",
+            authDomain: "bongda888.firebaseapp.com",
+            projectId: "bongda888",
+            storageBucket: "bongda888.firebasestorage.app",
+            messagingSenderId: "341048440291",
+            appId: "1:341048440291:web:f87f61b46b0f188c4a1cd6",
+            measurementId: "G-4R3DDMMZ3K"
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // KIỂM TRA TRẠNG THÁI ĐĂNG NHẬP (Bảo mật Route)
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                // Nếu chưa đăng nhập -> Đá về trang login
+                window.location.href = "login.html";
+            } else {
+                // Đã đăng nhập -> Hiển thị giao diện và thông tin
+                document.getElementById('mainBody').classList.remove('hidden');
+                document.getElementById('userEmailDisplay').textContent = user.email;
+                initUserDashboard(); // Khởi tạo dữ liệu (Xu, API bóng đá)
+            }
+        });
+
+        // XỬ LÝ ĐĂNG XUẤT
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            if(confirm("Bạn có chắc chắn muốn đăng xuất?")) {
+                signOut(auth).then(() => {
+                    window.location.href = "login.html";
+                });
+            }
+        });
+
+        // --- CÁC HÀM XỬ LÝ GIAO DIỆN CHÍNH ---
+
+        let currentBalance = 0;
+
+        function initUserDashboard() {
+            loadBalance();
+            checkDailyGift();
+            fetchRealtimeMatches();
+        }
+
+        // HỆ THỐNG XU (Sử dụng LocalStorage làm Demo)
+        function loadBalance() {
+            // Lấy số dư từ LocalStorage. Nếu tài khoản mới chưa có thì mặc định là 1000 Xu.
+            const savedBalance = localStorage.getItem('userBalance');
+            currentBalance = savedBalance ? parseInt(savedBalance) : 1000;
+            updateBalanceUI();
+        }
+
+        function updateBalanceUI() {
+            document.getElementById('userBalanceDisplay').textContent = currentBalance.toLocaleString('vi-VN');
+            localStorage.setItem('userBalance', currentBalance);
+        }
+
+        // QUÀ ĐĂNG NHẬP (Nhận 1 lần / ngày)
+        const claimGiftBtn = document.getElementById('claimGiftBtn');
+        const giftMessage = document.getElementById('giftMessage');
+
+        function checkDailyGift() {
+            const today = new Date().toLocaleDateString('vi-VN');
+            const lastClaimed = localStorage.getItem('lastGiftDate');
+
+            if (lastClaimed === today) {
+                disableGiftBtn("Đã nhận quà hôm nay");
+            }
+        }
+
+        claimGiftBtn.addEventListener('click', () => {
+            currentBalance += 500;
+            updateBalanceUI();
+            
+            // Lưu ngày nhận vào local
+            const today = new Date().toLocaleDateString('vi-VN');
+            localStorage.setItem('lastGiftDate', today);
+            
+            disableGiftBtn("Nhận thành công 500 Xu!");
+            giftMessage.textContent = "+500 Xu đã được cộng vào tài khoản.";
+            giftMessage.classList.remove('hidden');
+        });
+
+        function disableGiftBtn(text) {
+            claimGiftBtn.disabled = true;
+            claimGiftBtn.textContent = text;
+            claimGiftBtn.classList.replace('bg-brand-yellow', 'bg-slate-700');
+            claimGiftBtn.classList.replace('hover:bg-yellow-500', 'hover:bg-slate-700');
+            claimGiftBtn.classList.replace('text-slate-900', 'text-gray-400');
+        }
+
+        // TẢI API BÓNG ĐÁ
+        async function fetchRealtimeMatches() {
+            const grid = document.getElementById('matches-grid');
+            
+            // Dữ liệu giả lập (Fallback) để web luôn đẹp ngay cả khi chưa có API Key
+            const mockMatches = [
+                { id: 1, league: "Vòng Bảng - World Cup 2026", home: "Bồ Đào Nha", homeFlag: "https://flagcdn.com/w80/pt.png", away: "Đức", awayFlag: "https://flagcdn.com/w80/de.png", score: "0 - 0", status: "<span class='text-brand-blue'>21:00 Hôm nay</span>", canPredict: true },
+                { id: 2, league: "Vòng Bảng - World Cup 2026", home: "Việt Nam", homeFlag: "https://flagcdn.com/w80/vn.png", away: "Nhật Bản", awayFlag: "https://flagcdn.com/w80/jp.png", score: "1 - 1", status: "<span class='text-red-500 font-bold animate-pulse'>Phút 75</span>", canPredict: true },
+                { id: 3, league: "Vòng Bảng - World Cup 2026", home: "Argentina", homeFlag: "https://flagcdn.com/w80/ar.png", away: "Pháp", awayFlag: "https://flagcdn.com/w80/fr.png", score: "2 - 1", status: "<span class='text-gray-500'>Đã kết thúc (FT)</span>", canPredict: false }
+            ];
+
+            grid.innerHTML = '';
+            mockMatches.forEach(match => {
+                const btnHTML = match.canPredict 
+                    ? `<button onclick="openPredictionModal('${match.home}', '${match.away}')" class="block w-full text-center bg-slate-800 hover:bg-brand-blue text-white text-sm font-semibold py-2.5 rounded-lg transition border border-slate-700">Dự Đoán Ngay</button>`
+                    : `<button disabled class="block w-full text-center bg-slate-800/50 text-gray-500 text-sm font-semibold py-2.5 rounded-lg border border-slate-800 cursor-not-allowed">Đã khóa kèo</button>`;
+
+                grid.innerHTML += `
+                    <div class="bg-slate-900 rounded-2xl p-5 border border-slate-800 hover:border-brand-blue transition duration-300">
+                        <div class="text-center text-xs font-semibold text-gray-500 mb-4 uppercase tracking-wider">${match.league}</div>
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="text-center w-1/3">
+                                <img src="${match.homeFlag}" class="w-12 h-8 mx-auto mb-2 rounded-sm object-cover" alt="Home">
+                                <div class="text-sm font-bold truncate text-white">${match.home}</div>
+                            </div>
+                            <div class="text-center w-1/3">
+                                <div class="text-2xl font-black text-white">${match.score}</div>
+                                <div class="text-xs mt-1 font-medium">${match.status}</div>
+                            </div>
+                            <div class="text-center w-1/3">
+                                <img src="${match.awayFlag}" class="w-12 h-8 mx-auto mb-2 rounded-sm object-cover" alt="Away">
+                                <div class="text-sm font-bold truncate text-white">${match.away}</div>
+                            </div>
+                        </div>
+                        ${btnHTML}
+                    </div>
+                `;
+            });
+        }
+
+        // Đẩy hàm ra Global để HTML có thể gọi được
+        window.openPredictionModal = openPredictionModal;
+        window.closeModal = closeModal;
+        window.selectBet = selectBet;
+        window.confirmBet = confirmBet;
+
+        // XỬ LÝ MODAL DỰ ĐOÁN
+        let currentBetSelection = null;
+        const modal = document.getElementById('predictionModal');
+        const modalContent = document.getElementById('modalContent');
+        const errorMsg = document.getElementById('betError');
+        const betInput = document.getElementById('betAmount');
+
+        function openPredictionModal(home, away) {
+            document.getElementById('modalMatchInfo').textContent = `${home} vs ${away}`;
+            // Reset modal
+            currentBetSelection = null;
+            betInput.value = '';
+            errorMsg.classList.add('hidden');
+            ['btnHome', 'btnDraw', 'btnAway'].forEach(id => {
+                document.getElementById(id).classList.remove('bg-brand-blue', 'text-white', 'border-brand-blue');
+            });
+
+            // Hiện modal kèm hiệu ứng
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 200); // Đợi animation CSS chạy xong
+        }
+
+        function selectBet(choice) {
+            currentBetSelection = choice;
+            // Reset UI nút
+            ['btnHome', 'btnDraw', 'btnAway'].forEach(id => {
+                document.getElementById(id).classList.remove('bg-brand-blue', 'border-brand-blue');
+            });
+            // Active nút được chọn
+            document.getElementById(`btn${choice}`).classList.add('bg-brand-blue', 'border-brand-blue');
+        }
+
+        function confirmBet() {
+            const amount = parseInt(betInput.value);
+
+            if (!currentBetSelection) {
+                showError("Vui lòng chọn đội thắng hoặc hòa!");
+                return;
+            }
+            if (!amount || amount < 100) {
+                showError("Số Xu cược tối thiểu là 100 Xu!");
+                return;
+            }
+            if (amount > currentBalance) {
+                showError(`Bạn không đủ Xu. Số dư hiện tại: ${currentBalance.toLocaleString('vi-VN')} Xu.`);
+                return;
+            }
+
+            // Trừ tiền và cập nhật
+            currentBalance -= amount;
+            updateBalanceUI();
+            
+            alert(`Thành công! Bạn đã đặt ${amount.toLocaleString('vi-VN')} Xu. Chúc bạn may mắn!`);
+            closeModal();
+        }
+
+        function showError(msg) {
+            errorMsg.textContent = msg;
+            errorMsg.classList.remove('hidden');
+        }
+
+    </script>
+</body>
+</html>
