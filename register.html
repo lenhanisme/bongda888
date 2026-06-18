@@ -12,13 +12,16 @@
             theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { slate: { 950: '#020617', 900: '#0f172a', 800: '#1e293b' }, brand: { blue: '#3b82f6', green: '#10b981' } } } }
         }
     </script>
-    <style>body { background-color: #020617; color: #f8fafc; }</style>
+    <style>
+        body { background-color: #020617; color: #f8fafc; }
+        /* Tùy chỉnh màu cho checkbox */
+        input[type="checkbox"] { accent-color: #3b82f6; }
+    </style>
 </head>
 <body class="antialiased flex items-center justify-center min-h-screen p-4">
 
-    <div class="w-full max-w-md bg-slate-900 rounded-2xl border border-slate-800 p-8 shadow-2xl">
-        <!-- Logo -->
-        <div class="text-center mb-8">
+    <div class="w-full max-w-md bg-slate-900 rounded-2xl border border-slate-800 p-8 shadow-2xl my-8">
+        <div class="text-center mb-6">
             <a href="index.html" class="inline-flex items-center gap-2 mb-2">
                 <i class="ph-fill ph-soccer-ball text-3xl text-brand-blue"></i>
                 <span class="text-2xl font-bold tracking-tight">Bongda888</span>
@@ -27,18 +30,26 @@
             <p class="text-sm text-gray-400 mt-1">Tham gia dự đoán World Cup ngay hôm nay</p>
         </div>
 
-        <!-- Thông báo lỗi/thành công -->
         <div id="messageBox" class="hidden mb-4 p-3 rounded-lg text-sm font-medium text-center"></div>
 
-        <!-- Form Đăng Ký -->
-        <form id="registerForm" class="space-y-5">
+        <form id="registerForm" class="space-y-4">
             <div>
                 <label class="block text-sm font-medium text-gray-300 mb-1">Email</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <i class="ph ph-envelope-simple text-gray-400 text-lg"></i>
                     </div>
-                    <input type="email" id="email" required class="w-full bg-slate-800 border border-slate-700 text-white rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition" placeholder="name@example.com">
+                    <input type="email" id="email" required class="w-full bg-slate-800 border border-slate-700 text-white rounded-lg pl-10 pr-4 py-2.5 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition" placeholder="name@example.com">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-300 mb-1">Số điện thoại</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="ph ph-phone text-gray-400 text-lg"></i>
+                    </div>
+                    <input type="tel" id="phone" required pattern="^0[0-9]{9}$" title="Vui lòng nhập 10 chữ số, bắt đầu bằng số 0" class="w-full bg-slate-800 border border-slate-700 text-white rounded-lg pl-10 pr-4 py-2.5 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition" placeholder="09xxxxxxxx">
                 </div>
             </div>
 
@@ -48,7 +59,7 @@
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <i class="ph ph-lock-key text-gray-400 text-lg"></i>
                     </div>
-                    <input type="password" id="password" required minlength="6" class="w-full bg-slate-800 border border-slate-700 text-white rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition" placeholder="Ít nhất 6 ký tự">
+                    <input type="password" id="password" required minlength="6" class="w-full bg-slate-800 border border-slate-700 text-white rounded-lg pl-10 pr-4 py-2.5 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition" placeholder="Ít nhất 6 ký tự">
                 </div>
             </div>
 
@@ -58,11 +69,20 @@
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <i class="ph ph-check-circle text-gray-400 text-lg"></i>
                     </div>
-                    <input type="password" id="confirmPassword" required class="w-full bg-slate-800 border border-slate-700 text-white rounded-lg pl-10 pr-4 py-3 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition" placeholder="Xác nhận mật khẩu">
+                    <input type="password" id="confirmPassword" required class="w-full bg-slate-800 border border-slate-700 text-white rounded-lg pl-10 pr-4 py-2.5 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition" placeholder="Xác nhận mật khẩu">
                 </div>
             </div>
 
-            <button type="submit" id="submitBtn" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-semibold py-3 rounded-lg transition flex justify-center items-center gap-2">
+            <div class="flex items-start gap-2 pt-2">
+                <div class="flex items-center h-5">
+                    <input id="confirmInfo" type="checkbox" required class="w-4 h-4 border border-slate-600 rounded bg-slate-800 cursor-pointer">
+                </div>
+                <label for="confirmInfo" class="text-sm text-gray-400 cursor-pointer leading-tight">
+                    Tôi xác nhận mọi thông tin đăng ký phía trên là hoàn toàn chính xác.
+                </label>
+            </div>
+
+            <button type="submit" id="submitBtn" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-semibold py-3 mt-2 rounded-lg transition flex justify-center items-center gap-2">
                 Đăng Ký
             </button>
         </form>
@@ -72,35 +92,43 @@
         </div>
     </div>
 
-    <!-- TÍCH HỢP FIREBASE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-        // BƯỚC 1: DÁN CẤU HÌNH FIREBASE CỦA BẠN VÀO ĐÂY
+        // Cấu hình Firebase của bạn
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            apiKey: "AIzaSyBIamnJhv5opEZ3D9dAJOWbW0YEBgSPPTc",
+            authDomain: "bongda888.firebaseapp.com",
+            projectId: "bongda888",
+            storageBucket: "bongda888.firebasestorage.app",
+            messagingSenderId: "341048440291",
+            appId: "1:341048440291:web:f87f61b46b0f188c4a1cd6",
+            measurementId: "G-4R3DDMMZ3K"
         };
 
-        // Khởi tạo Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // Xử lý Form
         const registerForm = document.getElementById('registerForm');
         const messageBox = document.getElementById('messageBox');
         const submitBtn = document.getElementById('submitBtn');
 
         registerForm.addEventListener('submit', (e) => {
             e.preventDefault();
+            
             const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
+            const confirmInfo = document.getElementById('confirmInfo').checked;
+
+            // Kiểm tra số điện thoại (10 số, bắt đầu bằng 0)
+            const phoneRegex = /^0[0-9]{9}$/;
+            if (!phoneRegex.test(phone)) {
+                showMessage("Số điện thoại không hợp lệ! Vui lòng nhập đúng 10 số và bắt đầu bằng số 0.", "error");
+                return;
+            }
 
             // Kiểm tra mật khẩu khớp nhau
             if (password !== confirmPassword) {
@@ -108,22 +136,27 @@
                 return;
             }
 
-            // Đổi trạng thái nút
+            // Kiểm tra checkbox xác nhận
+            if (!confirmInfo) {
+                showMessage("Vui lòng tích vào ô xác nhận thông tin.", "error");
+                return;
+            }
+
+            // Đổi trạng thái nút khi đang tải
             submitBtn.innerHTML = '<i class="ph ph-spinner-gap animate-spin text-xl"></i> Đang xử lý...';
             submitBtn.disabled = true;
 
-            // Gọi API Firebase Đăng Ký
+            // Gọi API Firebase
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
+                    // Chỗ này sau này có thể thêm code lưu biến 'phone' vào Firestore Database
                     showMessage("Đăng ký thành công! Đang chuyển hướng...", "success");
-                    // Chuyển hướng sang trang home sau 1.5s
                     setTimeout(() => { window.location.href = "home.html"; }, 1500);
                 })
                 .catch((error) => {
                     submitBtn.innerHTML = 'Đăng Ký';
                     submitBtn.disabled = false;
                     
-                    // Bắt lỗi tiếng Việt
                     let errorMsg = "Có lỗi xảy ra!";
                     if (error.code === 'auth/email-already-in-use') errorMsg = "Email này đã được sử dụng.";
                     if (error.code === 'auth/weak-password') errorMsg = "Mật khẩu quá yếu (cần tối thiểu 6 ký tự).";
