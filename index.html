@@ -1,72 +1,288 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bongda888.VN | Dự Đoán Thể Thao World Cup 2026</title>
+    <title>Bongda888.VN - Nền Tảng Dự Đoán World Cup 2026 Số 1 Việt Nam</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            primary: '#10b981', // Emerald 500
+                            dark: '#064e3b',    // Emerald 900
+                            yellow: '#fbbf24',  // Amber 400
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        /* Tạo một background gradient mô phỏng sân cỏ và đèn sân vận động */
-        .hero-bg {
-            background: linear-gradient(135deg, rgba(17,24,39,0.9) 0%, rgba(6,78,59,0.8) 100%), url('https://images.unsplash.com/photo-1518605368461-1ee7c532066d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+        /* Hiệu ứng mờ dần khi load trang */
+        body { opacity: 0; transition: opacity 0.5s ease-in; }
+        body.loaded { opacity: 1; }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #111827; }
+        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+
+        /* Video Background Overlay */
+        .video-overlay {
+            background: linear-gradient(0deg, rgba(17,24,39,1) 0%, rgba(17,24,39,0.7) 50%, rgba(17,24,39,0.9) 100%);
         }
     </style>
 </head>
-<body class="bg-gray-900 text-white font-sans antialiased flex flex-col min-h-screen">
+<body class="bg-gray-900 text-white antialiased" onload="document.body.classList.add('loaded')">
 
-    <header class="p-6 flex justify-between items-center absolute w-full z-10">
-        <div class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-yellow-400">
-            Bongda888.VN
-        </div>
-        <div class="space-x-4 hidden md:block">
-            <a href="login.html" class="text-white hover:text-green-400 font-semibold transition">Đăng nhập</a>
-            <a href="register.html" class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-full font-bold shadow-lg transition transform hover:scale-105">Đăng ký ngay</a>
-        </div>
+    <header class="fixed top-0 w-full z-50 bg-gray-900/90 backdrop-blur-sm border-b border-gray-800">
+        <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-2">
+                <i class="fas fa-football-ball text-3xl text-brand-primary animate-pulse"></i>
+                <span class="text-2xl font-900 tracking-tighter text-white">
+                    BONGDA<span class="text-brand-primary">888</span><span class="text-xs self-start text-gray-500">.VN</span>
+                </span>
+            </a>
+
+            <div class="hidden md:flex items-center space-x-6 text-sm font-semibold text-gray-300">
+                <a href="#features" class="hover:text-white transition">Tính Năng</a>
+                <a href="#matches" class="hover:text-white transition">Kèo Hot</a>
+                <a href="#faq" class="hover:text-white transition">Hỗ Trợ</a>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <a href="login.html" class="text-sm font-semibold text-gray-300 hover:text-white transition px-4 py-2">
+                    Đăng nhập
+                </a>
+                <a href="register.html" class="bg-brand-primary hover:bg-green-600 text-white text-sm px-5 py-2.5 rounded-full font-bold shadow-lg transition transform hover:scale-105 hover:shadow-green-500/20">
+                    ĐĂNG KÝ NGAY
+                </a>
+            </div>
+        </nav>
     </header>
 
-    <main class="flex-grow flex items-center justify-center hero-bg text-center px-4 pt-20">
-        <div class="max-w-3xl">
-            <h1 class="text-5xl md:text-6xl font-black mb-6 uppercase tracking-wider drop-shadow-lg">
-                Dự Đoán Đỉnh Cao <br> <span class="text-yellow-400">World Cup 2026</span>
-            </h1>
-            <p class="text-lg md:text-xl text-gray-200 mb-10 leading-relaxed">
-                Tham gia cộng đồng dự đoán bóng đá lớn nhất. Cập nhật kết quả Real-time, nạp rút siêu tốc với VietQR và nhận quà đăng nhập mỗi ngày!
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <video autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1579952367203-d157bd0dfca9?q=80&w=1920" class="absolute z-0 w-auto min-w-full min-h-full max-w-none">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-football-player-kicking-the-ball-in-a-stadium-14066-large.mp4" type="video/mp4">
+        </video>
+        
+        <div class="absolute z-10 w-full h-full video-overlay"></div>
+
+        <div class="container mx-auto px-4 z-20 text-center relative">
+            <div class="inline-flex items-center bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/20 text-brand-yellow mb-6 shadow-xl">
+                <i class="fas fa-trophy mr-2"></i>
+                <span class="text-xs font-bold uppercase tracking-widest">Đường tới FIFA World Cup 2026</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-900 tracking-tighter mb-6 leading-none uppercase drop-shadow-2xl">
+                Dự Đoán Đỉnh Cao<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-brand-yellow">Rinh Quà Khủng</span>
+            <p class="max-w-2xl mx-auto text-lg md:text-xl text-gray-200 mb-12 leading-relaxed font-medium">
+                Chào mừng bạn đến với **Bongda888.VN** - Nền tảng dự đoán kết quả bóng đá uy tín, cập nhật Real-time và nạp rút tự động VietQR nhanh nhất cho World Cup 2026.
             </p>
             
             <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
-                <a href="register.html" class="w-full sm:w-auto bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white text-lg px-8 py-4 rounded-full font-bold shadow-xl transition transform hover:-translate-y-1">
-                    Tham Gia Ngay
+                <a href="register.html" class="group w-full sm:w-auto bg-brand-primary hover:bg-green-600 text-white text-lg px-10 py-4 rounded-full font-extrabold shadow-2xl transition transform hover:-translate-y-1 hover:shadow-green-500/50 flex items-center justify-center">
+                    BẮT ĐẦU NGAY
+                    <i class="fas fa-arrow-right ml-3 group-hover:translate-x-1 transition-transform"></i>
                 </a>
-                <a href="login.html" class="w-full sm:w-auto bg-gray-800 hover:bg-gray-700 border border-gray-600 text-white text-lg px-8 py-4 rounded-full font-bold shadow-xl transition transform hover:-translate-y-1">
-                    Đã có tài khoản?
+                <a href="#matches" class="w-full sm:w-auto bg-gray-800/80 hover:bg-gray-700 backdrop-blur-sm border border-gray-600 text-white text-lg px-10 py-4 rounded-full font-bold shadow-xl transition transform hover:-translate-y-1">
+                    Xem kèo hôm nay
                 </a>
             </div>
         </div>
-    </main>
 
-    <section class="bg-gray-900 py-16 px-4 border-t border-gray-800">
-        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div class="bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-700 hover:border-green-500 transition">
-                <div class="text-5xl mb-4">⚡</div>
-                <h3 class="text-xl font-bold mb-2 text-green-400">Cập Nhật Real-Time</h3>
-                <p class="text-gray-400">Dữ liệu trận đấu, tỷ số và diễn biến trên sân được cập nhật từng giây từ các nguồn uy tín nhất.</p>
+        <a href="#features" class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 text-gray-400 hover:text-white animate-bounce text-2xl">
+            <i class="fas fa-angle-double-down"></i>
+        </a>
+    </section>
+
+    <section class="bg-gray-950 border-y border-gray-800 py-10">
+        <div class="container mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div class="p-4">
+                <div class="text-4xl font-900 text-brand-primary">100K+</div>
+                <div class="text-sm text-gray-400 font-semibold mt-1">Người Chơi</div>
             </div>
-            <div class="bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-700 hover:border-yellow-400 transition">
-                <div class="text-5xl mb-4">💳</div>
-                <h3 class="text-xl font-bold mb-2 text-yellow-400">Nạp Tiền Tự Động</h3>
-                <p class="text-gray-400">Hỗ trợ quét mã VietQR tự động qua Sepay. Tiền vào tài khoản (Xu) chỉ trong vài giây. Min nạp 3K!</p>
+            <div class="p-4">
+                <div class="text-4xl font-900 text-brand-primary">24/7</div>
+                <div class="text-sm text-gray-400 font-semibold mt-1">Hỗ Trợ</div>
             </div>
-            <div class="bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-700 hover:border-blue-400 transition">
-                <div class="text-5xl mb-4">🎁</div>
-                <h3 class="text-xl font-bold mb-2 text-blue-400">Quà Đăng Nhập</h3>
-                <p class="text-gray-400">Chỉ cần online mỗi ngày, bạn sẽ nhận ngay Xu miễn phí để tham gia thử tài dự đoán các trận cầu đinh.</p>
+            <div class="p-4">
+                <div class="text-4xl font-900 text-brand-primary">&lt; 30s</div>
+                <div class="text-sm text-gray-400 font-semibold mt-1">Nạp Tiền</div>
+            </div>
+            <div class="p-4">
+                <div class="text-4xl font-900 text-brand-primary">API</div>
+                <div class="text-sm text-gray-400 font-semibold mt-1">Real-time</div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-gray-950 py-6 text-center border-t border-gray-800 text-gray-500 text-sm">
-        <p>&copy; 2026 Bongda888.VN. Trải nghiệm giải trí thể thao đỉnh cao.</p>
-        <p class="mt-2">Tỉ lệ quy đổi: 1,000 VNĐ = 1,000 Xu</p>
+    <section id="features" class="py-24 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-sm font-bold text-brand-primary uppercase tracking-widest mb-2">Trải nghiệm khác biệt</h2>
+                <p class="text-4xl md:text-5xl font-800 tracking-tight text-white mb-4">Ưu Điểm Vượt Trội</p>
+                <p class="text-gray-400 text-lg">Chúng tôi cung cấp hệ thống dự đoán hiện đại nhất, đảm bảo tính minh bạch, tốc độ và quyền lợi cho người chơi.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="relative group bg-gray-800 p-8 rounded-2xl border border-gray-700 transition hover:border-brand-primary hover:-translate-y-2 hover:shadow-xl hover:shadow-green-500/10 overflow-hidden">
+                    <div class="absolute -bottom-10 -right-10 text-9xl text-gray-700/20 group-hover:text-brand-primary/10 transition">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="w-16 h-16 bg-brand-primary/10 rounded-xl flex items-center justify-center mb-6 border border-brand-primary/20">
+                        <i class="fas fa-bolt text-3xl text-brand-primary"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 text-white">Dữ Liệu Real-Time 100%</h3>
+                    <p class="text-gray-400 leading-relaxed relative z-10">Kết quả trận đấu, tỷ số, thẻ phạt được cập nhật từng giây qua API uy tín quốc tế. Không độ trễ.</p>
+                </div>
+
+                <div class="relative group bg-gray-800 p-8 rounded-2xl border border-gray-700 transition hover:border-brand-yellow hover:-translate-y-2 hover:shadow-xl hover:shadow-amber-500/10 overflow-hidden">
+                    <div class="absolute -bottom-10 -right-10 text-9xl text-gray-700/20 group-hover:text-brand-yellow/10 transition">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <div class="w-16 h-16 bg-brand-yellow/10 rounded-xl flex items-center justify-center mb-6 border border-brand-yellow/20">
+                        <i class="fas fa-qrcode text-3xl text-brand-yellow"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 text-white">Nạp Xu VietQR Tự Động</h3>
+                    <p class="text-gray-400 leading-relaxed relative z-10">Tích hợp Sepay, quét mã QR ngân hàng là có Xu ngay. Tối thiểu chỉ từ **3,000 VNĐ** (3,000 Xu).</p>
+                </div>
+
+                <div class="relative group bg-gray-800 p-8 rounded-2xl border border-gray-700 transition hover:border-blue-400 hover:-translate-y-2 hover:shadow-xl hover:shadow-blue-500/10 overflow-hidden">
+                    <div class="absolute -bottom-10 -right-10 text-9xl text-gray-700/20 group-hover:text-blue-400/10 transition">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <div class="w-16 h-16 bg-blue-400/10 rounded-xl flex items-center justify-center mb-6 border border-blue-400/20">
+                        <i class="fas fa-gift text-3xl text-blue-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 text-white">Quà Tặng Hàng Ngày</h3>
+                    <p class="text-gray-400 leading-relaxed relative z-10">Chỉ cần đăng nhập mỗi ngày, nhận ngay Xu miễn phí để tham gia dự đoán mà không cần nạp tiền.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="matches" class="py-24 bg-gray-950 border-t border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center mb-12">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-800 tracking-tight text-white">Kèo Hot Hôm Nay</h2>
+                    <p class="text-gray-400 mt-1">Đừng bỏ lỡ các trận cầu kịch tính nhất World Cup</p>
+                </div>
+                <a href="login.html" class="text-brand-primary font-semibold text-sm hover:text-green-400 flex items-center">
+                    Xem tất cả <i class="fas fa-chevron-right ml-2"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                
+                <div class="bg-gray-800 rounded-2xl p-6 border border-gray-700 flex flex-col md:flex-row items-center justify-between hover:border-gray-600 transition group">
+                    <div class="flex items-center space-x-4 mb-4 md:mb-0 w-full md:w-auto justify-center">
+                        <div class="text-center">
+                            <img src="https://flagcdn.com/w80/vn.png" alt="Vietnam" class="w-16 h-10 object-cover rounded shadow-md border border-gray-700">
+                            <div class="font-bold mt-2 text-white">Việt Nam</div>
+                        </div>
+                        <div class="text-2xl font-900 text-gray-500 group-hover:text-brand-primary transition">VS</div>
+                        <div class="text-center">
+                            <img src="https://flagcdn.com/w80/th.png" alt="Thailand" class="w-16 h-10 object-cover rounded shadow-md border border-gray-700">
+                            <div class="font-bold mt-2 text-white">Thái Lan</div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center md:text-right border-t md:border-t-0 md:border-l border-gray-700 pt-4 md:pt-0 md:pl-6 w-full md:w-auto">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider">Vòng Loại Bảng A</div>
+                        <div class="text-lg font-semibold text-white mt-1">Hôm nay | 19:00</div>
+                        <a href="login.html" class="inline-block mt-3 bg-gray-700 hover:bg-brand-primary text-white text-xs px-5 py-2 rounded-full font-bold transition">
+                            Dự đoán ngay
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800 rounded-2xl p-6 border border-gray-700 flex flex-col md:flex-row items-center justify-between hover:border-gray-600 transition group">
+                    <div class="flex items-center space-x-4 mb-4 md:mb-0 w-full md:w-auto justify-center">
+                        <div class="text-center">
+                            <img src="https://flagcdn.com/w80/br.png" alt="Brazil" class="w-16 h-10 object-cover rounded shadow-md border border-gray-700">
+                            <div class="font-bold mt-2 text-white">Brazil</div>
+                        </div>
+                        <div class="text-2xl font-900 text-gray-500 group-hover:text-brand-primary transition">VS</div>
+                        <div class="text-center">
+                            <img src="https://flagcdn.com/w80/fr.png" alt="France" class="w-16 h-10 object-cover rounded shadow-md border border-gray-700">
+                            <div class="font-bold mt-2 text-white">Pháp</div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center md:text-right border-t md:border-t-0 md:border-l border-gray-700 pt-4 md:pt-0 md:pl-6 w-full md:w-auto">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider">Tứ Kết</div>
+                        <div class="text-lg font-semibold text-brand-yellow mt-1 animate-pulse">Đang đá - Phút 65</div>
+                        <div class="text-3xl font-900 text-white mt-1">2 - 1</div>
+                        <a href="login.html" class="inline-block mt-3 bg-brand-primary hover:bg-green-600 text-white text-xs px-5 py-2 rounded-full font-bold transition">
+                            Xem Live
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-gradient-to-b from-gray-950 to-brand-dark">
+        <div class="container mx-auto px-4 text-center">
+            <h3 class="text-4xl md:text-5xl font-900 tracking-tighter text-white mb-6 leading-tight">
+                Sẵn Sàng Cho<br>Mùa World Cup Bùng Nổ?
+            </h3>
+            <p class="text-gray-200 text-lg max-w-xl mx-auto mb-10 leading-relaxed hover:text-white transition">
+                Tạo tài khoản ngay hôm nay, nhận Xu điểm danh và bắt đầu hành trình chinh phục những giải thưởng hấp dẫn cùng cộng đồng **Bongda888.VN**.
+            </p>
+            <a href="register.html" class="inline-block bg-white hover:bg-gray-100 text-brand-dark text-lg px-12 py-4 rounded-full font-extrabold shadow-2xl transition transform hover:scale-110 hover:shadow-white/20">
+                <i class="fas fa-user-plus mr-2"></i> ĐĂNG KÝ MIỄN PHÍ
+            </a>
+            <div class="mt-4 text-xs text-gray-400">Tỉ lệ quy đổi: 1,000 VNĐ = 1,000 Xu</div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-950 py-12 border-t border-gray-800 text-gray-500">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="md:col-span-1">
+                 <a href="#" class="flex items-center space-x-2 mb-4">
+                    <i class="fas fa-football-ball text-2xl text-gray-600"></i>
+                    <span class="text-xl font-900 text-white opacity-70">BONGDA888<span class="text-xs self-start">.VN</span></span>
+                </a>
+                <p class="text-xs leading-relaxed">Nền tảng giải trí, dự đoán bóng đá mô phỏng phục vụ cộng đồng yêu thể thao. Vui lòng chơi có trách nhiệm.</p>
+            </div>
+            <div class="text-sm">
+                <h4 class="font-bold text-gray-300 mb-3">Liên kết</h4>
+                <a href="#features" class="block hover:text-brand-primary mb-2">Tính năng</a>
+                <a href="#matches" class="block hover:text-brand-primary mb-2">Kèo hôm nay</a>
+                <a href="login.html" class="block hover:text-brand-primary mb-2">Đăng nhập</a>
+            </div>
+            <div class="text-sm">
+                <h4 class="font-bold text-gray-300 mb-3">Quy định</h4>
+                <a href="#" class="block hover:text-brand-primary mb-2">Điều khoản sử dụng</a>
+                <a href="#" class="block hover:text-brand-primary mb-2">Chính sách bảo mật</a>
+            </div>
+            <div class="text-sm">
+                <h4 class="font-bold text-gray-300 mb-3">Cộng đồng</h4>
+                <div class="flex space-x-4 text-lg">
+                    <a href="#" class="hover:text-white"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="hover:text-white"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="hover:text-white"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="container mx-auto px-4 text-center mt-10 pt-6 border-t border-gray-800 text-xs">
+            &copy; 2026 Bongda888.VN. All rights reserved. Trải nghiệm World Cup đỉnh cao.
+        </div>
     </footer>
 
 </body>
