@@ -19,7 +19,6 @@
         ::-webkit-scrollbar-track { background: #020617; }
         ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
-        /* Ẩn nút tăng giảm trong input số */
         input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
     </style>
 </head>
@@ -63,24 +62,22 @@
 
     <!-- MAIN CONTENT -->
     <main class="flex-grow pt-[80px] sm:pt-24 pb-12 px-3 sm:px-4 max-w-7xl mx-auto w-full">
-        <!-- Bảng điều khiển -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
             <div class="lg:col-span-2 bg-gradient-to-br from-slate-900 to-slate-800 rounded-[20px] sm:rounded-3xl border border-slate-700 p-5 sm:p-8 relative overflow-hidden flex flex-col justify-center shadow-xl">
                 <i class="ph-duotone ph-globe-hemisphere-west text-8xl sm:text-9xl absolute -right-4 sm:-right-6 -bottom-4 sm:-bottom-6 text-white opacity-5 pointer-events-none"></i>
                 <div class="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1 rounded-full bg-slate-800/80 border border-slate-600 text-[10px] sm:text-xs font-medium text-brand-yellow mb-3 sm:mb-4 w-max">
                     <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-red-500 animate-pulse"></span>
-                    Dữ liệu Real-time ESPN
+                    Hệ thống Trả thưởng Tự động
                 </div>
-                <h1 class="text-2xl sm:text-3xl md:text-4xl font-900 mb-2 text-white relative z-10 tracking-tight leading-tight">Cập Nhật Bàn Thắng Từng Giây!</h1>
-                <p class="text-gray-400 text-xs sm:text-sm md:text-base mb-5 sm:mb-6 relative z-10 max-w-lg leading-relaxed">Hệ thống tự động cập nhật cầu thủ ghi bàn, thời gian và tính toán tỉ lệ cược dựa trên diễn biến trận đấu.</p>
+                <h1 class="text-2xl sm:text-3xl md:text-4xl font-900 mb-2 text-white relative z-10 tracking-tight leading-tight">Cập Nhật & Trả Thưởng Từng Giây!</h1>
+                <p class="text-gray-400 text-xs sm:text-sm md:text-base mb-5 sm:mb-6 relative z-10 max-w-lg leading-relaxed">Hệ thống tự quét hàng trăm trận đấu toàn cầu, cập nhật bàn thắng và tự động cộng Xu nếu vé cược của bạn chính xác.</p>
                 <div class="relative z-10">
                     <button onclick="fetchRealtimeMatches()" class="inline-flex items-center justify-center w-full sm:w-auto gap-2 bg-brand-blue hover:bg-blue-600 text-white font-bold px-6 py-3 rounded-xl sm:rounded-xl transition text-sm shadow-lg shadow-blue-500/30 transform active:scale-95 sm:hover:-translate-y-0.5">
-                        <i class="ph-bold ph-arrows-clockwise text-lg"></i> Làm mới Tỷ số
+                        <i class="ph-bold ph-arrows-clockwise text-lg"></i> Cập nhật Tỷ số & Vé cược
                     </button>
                 </div>
             </div>
 
-            <!-- Card Quà Đăng Nhập -->
             <div class="bg-slate-900 rounded-[20px] sm:rounded-3xl border border-slate-700 p-5 sm:p-8 flex flex-col items-center justify-center text-center shadow-xl">
                 <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center mb-3 sm:mb-5 shadow-lg shadow-yellow-500/20">
                     <i class="ph-fill ph-gift text-3xl sm:text-4xl text-slate-900"></i>
@@ -94,12 +91,11 @@
             </div>
         </div>
 
-        <!-- DANH SÁCH TRẬN ĐẤU -->
         <section id="live-matches">
             <div id="leagues-container" class="space-y-8 sm:space-y-12">
                 <div class="text-center py-12 sm:py-16 bg-slate-900 rounded-[20px] sm:rounded-3xl border border-slate-800 mx-1 sm:mx-0">
                     <i class="ph-duotone ph-soccer-ball animate-spin text-4xl sm:text-5xl text-brand-blue mx-auto mb-3"></i>
-                    <p class="text-gray-400 text-sm sm:text-lg font-medium">Đang tải dữ liệu và tỉ lệ cược...</p>
+                    <p class="text-gray-400 text-sm sm:text-lg font-medium">Đang tải hàng trăm trận đấu và đối soát kết quả...</p>
                 </div>
             </div>
         </section>
@@ -124,7 +120,6 @@
                 <div class="mb-5">
                     <label class="block text-xs sm:text-sm font-medium text-gray-400 mb-2.5 sm:mb-3">Tỉ lệ cược (Ăn bao nhiêu lần):</label>
                     <div class="grid grid-cols-3 gap-2 sm:gap-3" id="betOptionsContainer">
-                        <!-- JS sẽ đổ nút có Tỉ lệ cược vào đây -->
                     </div>
                 </div>
 
@@ -264,17 +259,86 @@
             return { home: h.toFixed(2), draw: d.toFixed(2), away: a.toFixed(2) };
         }
 
+        // HÀM TỰ ĐỘNG ĐỐI SOÁT KẾT QUẢ VÀ TRẢ THƯỞNG
+        function resolveBets(eventsData) {
+            let history = JSON.parse(localStorage.getItem('betHistory')) || [];
+            let historyChanged = false;
+            let totalWonAmount = 0;
+            let totalLostCount = 0;
+
+            // 1. Tạo từ điển các trận đã kết thúc từ API
+            const finishedMatches = {};
+            eventsData.forEach(match => {
+                if (match.status.type.state === 'post') {
+                    const competition = match.competitions[0];
+                    const homeTeam = competition.competitors.find(c => c.homeAway === 'home') || competition.competitors[0];
+                    const awayTeam = competition.competitors.find(c => c.homeAway === 'away') || competition.competitors[1];
+                    
+                    const homeName = homeTeam.team.name.replace(/'/g, "\\'");
+                    const awayName = awayTeam.team.name.replace(/'/g, "\\'");
+                    const matchKey = `${homeName} vs ${awayName}`;
+                    
+                    let result = 'Hòa';
+                    const hScore = parseInt(homeTeam.score) || 0;
+                    const aScore = parseInt(awayTeam.score) || 0;
+                    if (hScore > aScore) result = homeName;
+                    else if (aScore > hScore) result = awayName;
+
+                    finishedMatches[matchKey] = result;
+                }
+            });
+
+            // 2. Quét qua lịch sử cược (Những vé đang 'pending')
+            history.forEach(bet => {
+                if (bet.status === 'pending' && finishedMatches[bet.match]) {
+                    const actualResult = finishedMatches[bet.match];
+                    
+                    if (bet.choice === actualResult) {
+                        bet.status = 'won';
+                        currentBalance += bet.payout;
+                        totalWonAmount += bet.payout;
+                    } else {
+                        bet.status = 'lost';
+                        totalLostCount += 1;
+                    }
+                    historyChanged = true;
+                }
+            });
+
+            // 3. Nếu có thay đổi, lưu lại và hiện thông báo
+            if (historyChanged) {
+                localStorage.setItem('betHistory', JSON.stringify(history));
+                updateBalanceUI();
+                
+                // Hiện thông báo trả thưởng
+                if (totalWonAmount > 0) {
+                    alert(`🎉 TIN VUI TỪ NHÀ CÁI!\nCác trận đấu bạn cược vừa kết thúc. Bạn đã THẮNG và được cộng tổng cộng ${totalWonAmount.toLocaleString('vi-VN')} Xu vào tài khoản!`);
+                } else if (totalLostCount > 0) {
+                    alert(`❌ TIN BUỒN!\nCó ${totalLostCount} vé cược của bạn không trùng khớp với kết quả trận đấu thực tế. Chúc bạn may mắn lần sau!`);
+                }
+
+                // Nếu đang mở Modal Lịch sử thì refresh nó luôn
+                if (!document.getElementById('historyModal').classList.contains('hidden')) {
+                    openHistoryModal();
+                }
+            }
+        }
+
         async function fetchRealtimeMatches() {
             const container = document.getElementById('leagues-container');
-            container.innerHTML = `<div class="text-center py-12 sm:py-16 bg-slate-900 rounded-[20px] sm:rounded-3xl border border-slate-800 mx-1 sm:mx-0"><i class="ph-duotone ph-soccer-ball animate-spin text-4xl sm:text-5xl text-brand-blue mx-auto mb-3"></i><p class="text-gray-400 text-sm sm:text-lg font-medium">Đang tải dữ liệu và tỉ lệ cược...</p></div>`;
+            container.innerHTML = `<div class="text-center py-12 sm:py-16 bg-slate-900 rounded-[20px] sm:rounded-3xl border border-slate-800 mx-1 sm:mx-0"><i class="ph-duotone ph-soccer-ball animate-spin text-4xl sm:text-5xl text-brand-blue mx-auto mb-3"></i><p class="text-gray-400 text-sm sm:text-lg font-medium">Đang tải và cập nhật hàng trăm trận đấu...</p></div>`;
             
             try {
-                const response = await fetch("https://site.api.espn.com/apis/site/v2/sports/soccer/all/scoreboard");
+                // Thêm tham số limit=150 để lấy RẤT NHIỀU trận đấu (Kín lịch)
+                const response = await fetch("https://site.api.espn.com/apis/site/v2/sports/soccer/all/scoreboard?limit=150");
                 const data = await response.json();
 
                 if (!data.events || data.events.length === 0) {
                     container.innerHTML = '<div class="text-center text-gray-400 py-12 sm:py-16 border border-slate-800 rounded-[20px] sm:rounded-3xl bg-slate-900 mx-1 sm:mx-0"><i class="ph-duotone ph-calendar-x text-5xl sm:text-6xl mb-3 text-slate-600"></i><p class="text-sm sm:text-lg px-4">Hiện không có trận đấu nào diễn ra.</p></div>'; return;
                 }
+
+                // GỌI HÀM TRẢ THƯỞNG TỰ ĐỘNG
+                resolveBets(data.events);
 
                 const leaguesMap = {};
 
@@ -517,14 +581,19 @@
             if(history.length === 0) {
                 list.innerHTML = `<div class="text-center text-gray-500 py-10 sm:py-16"><i class="ph-duotone ph-receipt text-5xl sm:text-6xl mb-2"></i><p class="text-sm sm:text-base">Bạn chưa có vé cược nào.</p></div>`;
             } else {
-                list.innerHTML = history.map(bet => `
+                list.innerHTML = history.map(bet => {
+                    let statusBadge = '<span class="bg-yellow-500/20 text-brand-yellow border border-yellow-500/30 text-[9px] sm:text-[10px] px-1.5 py-0.5 sm:px-2 sm:py-1 rounded font-bold uppercase whitespace-nowrap mt-1">Chờ KQ</span>';
+                    if(bet.status === 'won') statusBadge = '<span class="bg-green-500/20 text-brand-green border border-green-500/30 text-[9px] sm:text-[10px] px-1.5 py-0.5 sm:px-2 sm:py-1 rounded font-bold uppercase whitespace-nowrap mt-1">Thắng</span>';
+                    if(bet.status === 'lost') statusBadge = '<span class="bg-red-500/20 text-red-500 border border-red-500/30 text-[9px] sm:text-[10px] px-1.5 py-0.5 sm:px-2 sm:py-1 rounded font-bold uppercase whitespace-nowrap mt-1">Thua</span>';
+
+                    return `
                     <div class="bg-slate-800/80 sm:bg-slate-800/50 border border-slate-700 rounded-xl sm:rounded-xl p-3 sm:p-4 mb-3 sm:mb-3">
                         <div class="flex justify-between items-start border-b border-slate-700/50 pb-2 mb-2">
                             <div class="w-[70%] sm:w-2/3">
                                 <div class="text-[10px] sm:text-[11px] text-gray-400 mb-0.5">${bet.date}</div>
                                 <div class="font-bold text-white text-[13px] sm:text-sm truncate pr-2" title="${bet.match}">${bet.match}</div>
                             </div>
-                            <span class="bg-yellow-500/20 text-brand-yellow border border-yellow-500/30 text-[9px] sm:text-[10px] px-1.5 py-0.5 sm:px-2 sm:py-1 rounded font-bold uppercase whitespace-nowrap mt-1">Chờ KQ</span>
+                            ${statusBadge}
                         </div>
                         <div class="flex justify-between items-center mt-2.5 sm:mt-3">
                             <div class="w-[45%]">
@@ -544,7 +613,7 @@
                             </div>
                         </div>
                     </div>
-                `).join('');
+                `}).join('');
             }
 
             const modal = document.getElementById('historyModal');
