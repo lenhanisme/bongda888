@@ -2,101 +2,104 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Đăng Ký | Bongda888.VN</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script>
         tailwind.config = {
-            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { slate: { 950: '#020617', 900: '#0f172a', 800: '#1e293b' }, brand: { blue: '#3b82f6', green: '#10b981' } } } }
+            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { slate: { 950: '#020617', 900: '#0f172a', 800: '#1e293b' }, brand: { blue: '#3b82f6', green: '#10b981', yellow: '#fbbf24' } } } }
         }
     </script>
     <style>
-        body { background-color: #020617; color: #f8fafc; }
-        /* Tùy chỉnh màu cho checkbox */
-        input[type="checkbox"] { accent-color: #3b82f6; }
+        body { background-color: #020617; color: #f8fafc; -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
-<body class="antialiased flex items-center justify-center min-h-screen p-4">
+<body class="antialiased min-h-screen flex items-center justify-center p-4">
 
-    <div class="w-full max-w-md bg-slate-900 rounded-2xl border border-slate-800 p-8 shadow-2xl my-8">
-        <div class="text-center mb-6">
-            <a href="index.html" class="inline-flex items-center gap-2 mb-2">
-                <i class="ph-fill ph-soccer-ball text-3xl text-brand-blue"></i>
-                <span class="text-2xl font-bold tracking-tight">Bongda888</span>
-            </a>
-            <h2 class="text-xl font-semibold text-white">Tạo tài khoản mới</h2>
-            <p class="text-sm text-gray-400 mt-1">Tham gia dự đoán World Cup ngay hôm nay</p>
+    <div class="w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-32 bg-brand-blue/20 blur-[60px] pointer-events-none"></div>
+
+        <div class="text-center mb-8 relative z-10">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-800 border border-slate-700 mb-4 shadow-lg">
+                <i class="ph-fill ph-soccer-ball text-4xl text-brand-blue animate-spin-slow"></i>
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight mb-1">Tạo tài khoản mới</h1>
+            <p class="text-sm text-gray-400">Tham gia dự đoán World Cup ngay hôm nay</p>
         </div>
 
-        <div id="messageBox" class="hidden mb-4 p-3 rounded-lg text-sm font-medium text-center"></div>
+        <div id="messageBox" class="hidden mb-6 p-4 rounded-xl text-sm font-semibold flex items-center gap-2 border">
+            <i id="messageIcon" class="text-xl"></i>
+            <span id="messageText"></span>
+        </div>
 
-        <form id="registerForm" class="space-y-4">
+        <form id="registerForm" class="space-y-5 relative z-10">
             <div>
-                <label class="block text-sm font-medium text-gray-300 mb-1">Email</label>
+                <label class="block text-sm font-medium text-gray-300 mb-2">Email</label>
                 <div class="relative">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="ph ph-envelope-simple text-gray-400 text-lg"></i>
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                        <i class="ph-duotone ph-envelope text-gray-400 text-lg"></i>
                     </div>
-                    <input type="email" id="email" required class="w-full bg-slate-800 border border-slate-700 text-white rounded-lg pl-10 pr-4 py-2.5 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition" placeholder="name@example.com">
+                    <input type="email" id="email" required class="w-full bg-slate-950 border border-slate-700 text-white rounded-xl pl-10 pr-4 py-3.5 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition" placeholder="nhan@gmail.com">
                 </div>
             </div>
 
             <div>
-                <label class="block text-sm font-medium text-gray-300 mb-1">Số điện thoại</label>
+                <label class="block text-sm font-medium text-gray-300 mb-2">Số điện thoại</label>
                 <div class="relative">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="ph ph-phone text-gray-400 text-lg"></i>
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                        <i class="ph-duotone ph-phone text-gray-400 text-lg"></i>
                     </div>
-                    <input type="tel" id="phone" required pattern="^0[0-9]{9}$" title="Vui lòng nhập 10 chữ số, bắt đầu bằng số 0" class="w-full bg-slate-800 border border-slate-700 text-white rounded-lg pl-10 pr-4 py-2.5 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition" placeholder="09xxxxxxxx">
+                    <input type="tel" id="phone" required class="w-full bg-slate-950 border border-slate-700 text-white rounded-xl pl-10 pr-4 py-3.5 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition" placeholder="0817xxxxxx">
                 </div>
             </div>
 
             <div>
-                <label class="block text-sm font-medium text-gray-300 mb-1">Mật khẩu</label>
+                <label class="block text-sm font-medium text-gray-300 mb-2">Mật khẩu</label>
                 <div class="relative">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="ph ph-lock-key text-gray-400 text-lg"></i>
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                        <i class="ph-duotone ph-lock-key text-gray-400 text-lg"></i>
                     </div>
-                    <input type="password" id="password" required minlength="6" class="w-full bg-slate-800 border border-slate-700 text-white rounded-lg pl-10 pr-4 py-2.5 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition" placeholder="Ít nhất 6 ký tự">
+                    <input type="password" id="password" required class="w-full bg-slate-950 border border-slate-700 text-white rounded-xl pl-10 pr-4 py-3.5 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition" placeholder="••••••••">
                 </div>
             </div>
 
             <div>
-                <label class="block text-sm font-medium text-gray-300 mb-1">Nhập lại mật khẩu</label>
+                <label class="block text-sm font-medium text-gray-300 mb-2">Nhập lại mật khẩu</label>
                 <div class="relative">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="ph ph-check-circle text-gray-400 text-lg"></i>
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                        <i class="ph-duotone ph-check-circle text-gray-400 text-lg"></i>
                     </div>
-                    <input type="password" id="confirmPassword" required class="w-full bg-slate-800 border border-slate-700 text-white rounded-lg pl-10 pr-4 py-2.5 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition" placeholder="Xác nhận mật khẩu">
+                    <input type="password" id="repassword" required class="w-full bg-slate-950 border border-slate-700 text-white rounded-xl pl-10 pr-4 py-3.5 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition" placeholder="••••••••">
                 </div>
             </div>
 
-            <div class="flex items-start gap-2 pt-2">
+            <div class="flex items-start gap-3 py-2">
                 <div class="flex items-center h-5">
-                    <input id="confirmInfo" type="checkbox" required class="w-4 h-4 border border-slate-600 rounded bg-slate-800 cursor-pointer">
+                    <input id="terms" type="checkbox" required class="w-4 h-4 bg-slate-950 border-slate-700 rounded text-brand-blue focus:ring-brand-blue focus:ring-2">
                 </div>
-                <label for="confirmInfo" class="text-sm text-gray-400 cursor-pointer leading-tight">
+                <label for="terms" class="text-sm text-gray-400 leading-tight">
                     Tôi xác nhận mọi thông tin đăng ký phía trên là hoàn toàn chính xác.
                 </label>
             </div>
 
-            <button type="submit" id="submitBtn" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-semibold py-3 mt-2 rounded-lg transition flex justify-center items-center gap-2">
-                Đăng Ký
+            <button type="submit" id="submitBtn" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-blue-500/30 flex justify-center items-center gap-2 mt-2">
+                <span>Đăng Ký</span>
             </button>
         </form>
 
-        <div class="mt-6 text-center text-sm text-gray-400">
-            Đã có tài khoản? <a href="login.html" class="text-brand-blue hover:text-blue-400 font-medium transition">Đăng nhập</a>
-        </div>
+        <p class="text-center text-sm text-gray-400 mt-8 relative z-10">
+            Đã có tài khoản? <a href="login.html" class="text-brand-blue font-bold hover:underline">Đăng nhập</a>
+        </p>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+        // Bắt buộc phải import Firestore để lưu UserCode
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-        // Cấu hình Firebase của bạn
         const firebaseConfig = {
             apiKey: "AIzaSyBIamnJhv5opEZ3D9dAJOWbW0YEBgSPPTc",
             authDomain: "bongda888.firebaseapp.com",
@@ -106,77 +109,98 @@
             appId: "1:341048440291:web:f87f61b46b0f188c4a1cd6",
             measurementId: "G-4R3DDMMZ3K"
         };
-
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
 
-        const registerForm = document.getElementById('registerForm');
-        const messageBox = document.getElementById('messageBox');
+        const form = document.getElementById('registerForm');
         const submitBtn = document.getElementById('submitBtn');
+        const messageBox = document.getElementById('messageBox');
+        const messageText = document.getElementById('messageText');
+        const messageIcon = document.getElementById('messageIcon');
 
-        registerForm.addEventListener('submit', (e) => {
+        function showMessage(msg, type) {
+            messageBox.classList.remove('hidden', 'bg-red-500/10', 'border-red-500/30', 'text-red-400', 'bg-green-500/10', 'border-green-500/30', 'text-brand-green');
+            messageIcon.className = 'text-xl';
+            
+            if (type === 'error') {
+                messageBox.classList.add('bg-red-500/10', 'border-red-500/30', 'text-red-400');
+                messageIcon.classList.add('ph-fill', 'ph-warning-circle');
+            } else {
+                messageBox.classList.add('bg-green-500/10', 'border-green-500/30', 'text-brand-green');
+                messageIcon.classList.add('ph-fill', 'ph-check-circle');
+            }
+            
+            messageText.textContent = msg;
+        }
+
+        form.addEventListener('submit', (e) => {
             e.preventDefault();
             
             const email = document.getElementById('email').value;
             const phone = document.getElementById('phone').value;
             const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            const confirmInfo = document.getElementById('confirmInfo').checked;
+            const repassword = document.getElementById('repassword').value;
 
-            // Kiểm tra số điện thoại (10 số, bắt đầu bằng 0)
-            const phoneRegex = /^0[0-9]{9}$/;
-            if (!phoneRegex.test(phone)) {
-                showMessage("Số điện thoại không hợp lệ! Vui lòng nhập đúng 10 số và bắt đầu bằng số 0.", "error");
+            // Validate cơ bản
+            if (password !== repassword) {
+                showMessage("Mật khẩu nhập lại không khớp!", "error");
+                return;
+            }
+            if (password.length < 6) {
+                showMessage("Mật khẩu phải dài ít nhất 6 ký tự.", "error");
                 return;
             }
 
-            // Kiểm tra mật khẩu khớp nhau
-            if (password !== confirmPassword) {
-                showMessage("Mật khẩu xác nhận không khớp!", "error");
-                return;
-            }
-
-            // Kiểm tra checkbox xác nhận
-            if (!confirmInfo) {
-                showMessage("Vui lòng tích vào ô xác nhận thông tin.", "error");
-                return;
-            }
-
-            // Đổi trạng thái nút khi đang tải
-            submitBtn.innerHTML = '<i class="ph ph-spinner-gap animate-spin text-xl"></i> Đang xử lý...';
+            // Hiệu ứng Loading
             submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="ph ph-spinner-gap animate-spin text-xl"></i> Đang xử lý...`;
 
-            // Gọi API Firebase
+            // 1. Tạo tài khoản Auth
             createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    // Chỗ này sau này có thể thêm code lưu biến 'phone' vào Firestore Database
-                    showMessage("Đăng ký thành công! Đang chuyển hướng...", "success");
-                    setTimeout(() => { window.location.href = "home.html"; }, 1500);
+                .then(async (userCredential) => {
+                    const user = userCredential.user;
+                    
+                    // 2. Tạo UserCode (6 ký tự đầu của UID)
+                    const userCode = user.uid.substring(0, 6).toUpperCase();
+
+                    // 3. Ghi dữ liệu vào Firestore Database
+                    try {
+                        await setDoc(doc(db, "users", user.uid), {
+                            email: user.email,
+                            phone: phone,
+                            userCode: userCode,
+                            balance: 0, // Khởi tạo ví 0 Xu
+                            createdAt: new Date().toISOString()
+                        });
+
+                        // Khởi tạo cả lịch sử cược rỗng trên LocalStorage cho mượt
+                        localStorage.setItem('userBalance', '0');
+                        localStorage.setItem('betHistory', '[]');
+
+                        showMessage("Tạo tài khoản thành công! Đang vào sảnh...", "success");
+                        setTimeout(() => { window.location.href = "home.html"; }, 1500);
+
+                    } catch (dbError) {
+                        console.error("Lỗi tạo DB:", dbError);
+                        showMessage("Lỗi hệ thống khi khởi tạo ví!", "error");
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = `Đăng Ký`;
+                    }
                 })
                 .catch((error) => {
-                    submitBtn.innerHTML = 'Đăng Ký';
                     submitBtn.disabled = false;
+                    submitBtn.innerHTML = `Đăng Ký`;
                     
-                    let errorMsg = "Có lỗi xảy ra!";
-                    if (error.code === 'auth/email-already-in-use') errorMsg = "Email này đã được sử dụng.";
-                    if (error.code === 'auth/weak-password') errorMsg = "Mật khẩu quá yếu (cần tối thiểu 6 ký tự).";
-                    if (error.code === 'auth/invalid-email') errorMsg = "Định dạng email không hợp lệ.";
+                    // Bắt lỗi Tiếng Việt
+                    let errorMsg = "Có lỗi xảy ra, vui lòng thử lại.";
+                    if (error.code === 'auth/email-already-in-use') errorMsg = "Email này đã được đăng ký từ trước.";
+                    else if (error.code === 'auth/invalid-email') errorMsg = "Định dạng email không hợp lệ.";
+                    else if (error.code === 'auth/operation-not-allowed') errorMsg = "Firebase chưa bật tính năng Đăng ký Email/Mật khẩu.";
                     
                     showMessage(errorMsg, "error");
                 });
         });
-
-        // Hàm hiển thị thông báo
-        function showMessage(msg, type) {
-            messageBox.textContent = msg;
-            messageBox.classList.remove('hidden', 'bg-red-500/10', 'text-red-500', 'bg-green-500/10', 'text-brand-green', 'border', 'border-red-500/20', 'border-green-500/20');
-            
-            if (type === 'error') {
-                messageBox.classList.add('bg-red-500/10', 'text-red-500', 'border', 'border-red-500/20');
-            } else {
-                messageBox.classList.add('bg-green-500/10', 'text-brand-green', 'border', 'border-green-500/20');
-            }
-        }
     </script>
 </body>
 </html>
