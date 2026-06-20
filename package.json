@@ -1,0 +1,8 @@
+{
+  "name": "bongda888",
+  "version": "1.0.0",
+  "description": "Nền tảng dự đoán bóng đá",
+  "dependencies": {
+    "firebase-admin": "^12.0.0"
+  }
+}
