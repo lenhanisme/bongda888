@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Nạp Xu Tự Động | Bongda888.VN</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -13,110 +13,134 @@
         }
     </script>
     <style>
-        body { background-color: #020617; color: #f8fafc; }
+        body { background-color: #020617; color: #f8fafc; -webkit-tap-highlight-color: transparent;}
         .glass-nav { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05); }
-        /* Ẩn nút tăng giảm của thẻ input number */
-        input[type=number]::-webkit-inner-spin-button, 
-        input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col hidden" id="mainBody">
 
     <!-- NAVBAR -->
-    <nav class="fixed top-0 w-full z-50 glass-nav h-16">
+    <nav class="fixed top-0 w-full z-50 glass-nav h-[60px] sm:h-16">
         <div class="max-w-7xl mx-auto px-4 h-full flex items-center justify-between">
-            <a href="home.html" class="flex items-center gap-2 hover:opacity-80 transition">
+            <a href="home.html" class="flex items-center gap-2 hover:opacity-80 transition select-none">
                 <i class="ph-bold ph-arrow-left text-xl text-gray-400 hover:text-white"></i>
-                <i class="ph-fill ph-soccer-ball text-2xl text-brand-blue ml-2"></i>
-                <span class="text-xl font-bold tracking-tight hidden sm:block">Bongda888</span>
+                <span class="text-lg sm:text-xl font-bold tracking-tight text-white ml-1">Trang chủ</span>
             </a>
-            
-            <div class="flex items-center gap-4 sm:gap-6">
-                <!-- Số dư -->
-                <div class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg flex items-center gap-2 shadow-inner">
-                    <i class="ph-fill ph-coins text-brand-yellow text-lg"></i>
-                    <span class="font-bold text-sm" id="userBalanceDisplay">0</span> <span class="text-xs text-gray-400">Xu</span>
-                </div>
+            <div class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-inner">
+                <i class="ph-fill ph-coins text-brand-yellow text-lg"></i>
+                <span class="font-bold text-sm sm:text-base" id="userBalanceDisplay">0</span> <span class="text-xs text-gray-400">Xu</span>
             </div>
         </div>
     </nav>
 
     <!-- MAIN CONTENT -->
-    <main class="flex-grow pt-24 pb-12 px-4 flex items-center justify-center w-full">
-        <div class="bg-slate-900 rounded-3xl border border-slate-800 shadow-2xl w-full max-w-4xl overflow-hidden flex flex-col md:flex-row">
+    <main class="flex-grow pt-[80px] sm:pt-24 pb-12 px-3 sm:px-4 flex items-center justify-center w-full max-w-5xl mx-auto">
+        <div class="bg-slate-900 rounded-[24px] sm:rounded-3xl border border-slate-800 shadow-2xl w-full overflow-hidden flex flex-col md:flex-row">
             
             <!-- CỘT TRÁI: NHẬP SỐ TIỀN -->
-            <div class="w-full md:w-1/2 p-8 border-b md:border-b-0 md:border-r border-slate-800 flex flex-col justify-center">
-                <h2 class="text-3xl font-black text-white mb-2 tracking-tight">Nạp Xu Tự Động</h2>
-                <p class="text-sm text-gray-400 mb-8">Hệ thống gạch cước VietQR trong 3 giây. Tỉ lệ quy đổi: <strong class="text-brand-yellow">1 VNĐ = 1 Xu</strong>.</p>
-
+            <div class="w-full md:w-1/2 p-5 sm:p-8 border-b md:border-b-0 md:border-r border-slate-800 flex flex-col justify-center bg-slate-900/50">
                 <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-300 mb-3">Chọn số tiền nạp nhanh</label>
-                    <div class="grid grid-cols-2 gap-3">
-                        <button onclick="setAmount(50000)" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-brand-blue text-white py-3 rounded-xl font-bold transition">50.000 VNĐ</button>
-                        <button onclick="setAmount(100000)" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-brand-blue text-white py-3 rounded-xl font-bold transition">100.000 VNĐ</button>
-                        <button onclick="setAmount(200000)" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-brand-blue text-white py-3 rounded-xl font-bold transition">200.000 VNĐ</button>
-                        <button onclick="setAmount(500000)" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-brand-blue text-white py-3 rounded-xl font-bold transition">500.000 VNĐ</button>
-                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-black text-white mb-2 tracking-tight">Nạp Xu Tự Động</h2>
+                    <p class="text-[13px] sm:text-sm text-gray-400 leading-relaxed">Hệ thống gạch cước Webhook. Xu sẽ tự động cộng vào tài khoản trong 3-5 giây sau khi chuyển khoản thành công.</p>
                 </div>
 
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-300 mb-3">Hoặc nhập số tiền tùy ý (Tối thiểu 3,000 VNĐ)</label>
+                <div class="mb-6 bg-brand-blue/10 border border-brand-blue/20 rounded-xl p-4 flex items-center justify-between">
+                    <div>
+                        <p class="text-[11px] sm:text-xs text-gray-400 mb-0.5 uppercase tracking-wider font-semibold">Mã định danh của bạn</p>
+                        <p class="text-xl sm:text-2xl font-black text-brand-blue tracking-widest" id="userCodeDisplay">Đang tải...</p>
+                    </div>
+                    <i class="ph-duotone ph-identification-card text-4xl text-brand-blue/50"></i>
+                </div>
+
+                <div class="mb-5">
+                    <label class="block text-[13px] sm:text-sm font-medium text-gray-300 mb-2.5">Nhập số tiền nạp (VNĐ)</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                            <span class="text-gray-400 font-bold">₫</span>
+                            <span class="text-brand-yellow font-bold text-lg">₫</span>
                         </div>
-                        <input type="number" id="amountInput" oninput="handleInput()" class="w-full bg-slate-950 border border-slate-700 text-white rounded-xl pl-10 pr-4 py-4 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition font-bold text-lg" placeholder="Ví dụ: 50000">
+                        <input type="number" id="amountInput" oninput="handleInput()" class="w-full bg-slate-950 border border-slate-700 text-white rounded-xl pl-10 pr-4 py-3.5 sm:py-4 focus:outline-none focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow transition font-bold text-lg sm:text-xl" placeholder="Tối thiểu 10.000">
                     </div>
-                    <p id="errorMsg" class="text-red-400 text-sm mt-2 hidden flex items-center gap-1"><i class="ph-fill ph-warning-circle"></i> <span>Số tiền tối thiểu là 3,000 VNĐ</span></p>
-                </div>
-
-                <div class="mt-auto pt-6 border-t border-slate-800">
-                    <div class="flex justify-between items-center bg-brand-yellow/10 border border-brand-yellow/20 p-4 rounded-xl">
-                        <span class="text-sm font-medium text-gray-300">Thực nhận:</span>
-                        <div class="flex items-center gap-2">
-                            <i class="ph-fill ph-coins text-brand-yellow text-2xl animate-pulse"></i>
-                            <span id="xuReceive" class="text-2xl font-black text-brand-yellow">0</span>
-                        </div>
-                    </div>
+                    <p id="errorMsg" class="text-red-400 text-xs sm:text-sm mt-2 hidden flex items-center gap-1"><i class="ph-fill ph-warning-circle"></i> <span>Số tiền nạp tối thiểu là 10.000 VNĐ</span></p>
                 </div>
             </div>
 
-            <!-- CỘT PHẢI: MÃ QR -->
-            <div class="w-full md:w-1/2 p-8 bg-slate-950 flex flex-col items-center justify-center relative">
+            <!-- CỘT PHẢI: MÃ QR & THÔNG TIN CHUYỂN KHOẢN -->
+            <div class="w-full md:w-1/2 p-5 sm:p-8 bg-slate-950 flex flex-col items-center justify-center relative">
                 
-                <!-- Box chứa QR -->
-                <div class="bg-white p-4 rounded-2xl shadow-xl shadow-blue-500/10 w-64 h-64 flex items-center justify-center relative mb-6">
-                    <!-- Placeholder khi chưa nhập tiền -->
+                <!-- Box Mã QR -->
+                <div class="bg-white p-3 sm:p-4 rounded-2xl shadow-[0_0_30px_rgba(59,130,246,0.15)] w-48 h-48 sm:w-60 sm:h-60 flex items-center justify-center relative mb-6">
                     <div id="qrPlaceholder" class="text-center">
-                        <i class="ph-duotone ph-qr-code text-6xl text-slate-300 mb-2"></i>
-                        <p class="text-sm text-slate-500 font-medium">Nhập số tiền để tạo mã</p>
+                        <i class="ph-duotone ph-qr-code text-5xl sm:text-6xl text-slate-300 mb-2"></i>
+                        <p class="text-xs sm:text-sm text-slate-500 font-medium px-2">Nhập số tiền để tạo mã QR</p>
                     </div>
-                    
-                    <!-- Ảnh QR (Ẩn mặc định) -->
                     <img id="qrImage" src="" class="w-full h-full object-contain hidden rounded-xl" alt="Mã VietQR">
                 </div>
 
-                <div class="text-center w-full max-w-xs">
-                    <p class="text-gray-400 text-sm mb-4 leading-relaxed">Mở ứng dụng ngân hàng và <strong class="text-white">quét mã QR</strong>. Nội dung chuyển khoản đã được điền tự động.</p>
-                    
-                    <!-- Nút xác nhận chuyển khoản (Chỉ hiện khi QR đã load) -->
-                    <button id="confirmTransferBtn" onclick="simulatePayment()" class="hidden w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-blue-500/30 flex justify-center items-center gap-2">
-                        <i class="ph-bold ph-check-circle text-xl"></i> Tôi đã chuyển khoản
-                    </button>
-                    <p id="loadingMsg" class="hidden text-brand-green text-sm font-bold mt-4 animate-pulse">Đang kiểm tra giao dịch...</p>
+                <!-- Box Copy Thông tin cho Mobile -->
+                <div id="transferInfoBox" class="w-full max-w-sm bg-slate-800 border border-slate-700 rounded-xl p-4 hidden flex-col gap-3">
+                    <div class="flex justify-between items-center pb-2 border-b border-slate-700/50">
+                        <span class="text-xs text-gray-400">Ngân hàng:</span>
+                        <span class="font-bold text-white text-sm" id="displayBankName">MBBank</span>
+                    </div>
+                    <div class="flex justify-between items-center pb-2 border-b border-slate-700/50">
+                        <span class="text-xs text-gray-400">Số tài khoản:</span>
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-white text-sm" id="displayBankAcc">0817047222</span>
+                            <button onclick="copyText('displayBankAcc')" class="text-brand-blue hover:text-white p-1 bg-slate-700/50 rounded"><i class="ph-bold ph-copy"></i></button>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center pb-2 border-b border-slate-700/50">
+                        <span class="text-xs text-gray-400">Số tiền:</span>
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-brand-yellow text-sm" id="displayAmount">0 ₫</span>
+                            <button onclick="copyText('displayAmount', true)" class="text-brand-blue hover:text-white p-1 bg-slate-700/50 rounded"><i class="ph-bold ph-copy"></i></button>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center bg-slate-900 p-2 rounded-lg border border-slate-700 mt-1">
+                        <div class="flex flex-col">
+                            <span class="text-[10px] text-gray-400 uppercase">Nội dung (Bắt buộc):</span>
+                            <span class="font-black text-brand-green tracking-widest text-base" id="displaySyntax">NAPXU ...</span>
+                        </div>
+                        <button onclick="copyText('displaySyntax')" class="bg-brand-blue hover:bg-blue-600 text-white px-3 py-2 rounded-lg font-bold text-xs transition flex items-center gap-1 shadow-lg shadow-blue-500/20 active:scale-95">
+                            <i class="ph-bold ph-copy"></i> Copy
+                        </button>
+                    </div>
                 </div>
-            </div>
 
+                <!-- Trạng thái chờ -->
+                <div class="text-center w-full mt-6">
+                    <div id="waitingStatus" class="hidden flex-col items-center justify-center text-brand-blue animate-pulse">
+                        <i class="ph-duotone ph-circle-notch animate-spin text-3xl mb-2"></i>
+                        <span class="text-sm font-bold">Đang chờ thanh toán...</span>
+                    </div>
+                    <div id="successStatus" class="hidden flex-col items-center justify-center text-brand-green">
+                        <i class="ph-fill ph-check-circle text-5xl mb-2 shadow-green-500/50 drop-shadow-lg"></i>
+                        <span class="text-lg font-black tracking-tight">Nạp Xu Thành Công!</span>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </main>
 
-    <!-- SCRIPTS FIREBASE & LOGIC -->
+    <!-- TOAST THÔNG BÁO COPY -->
+    <div id="copyToast" class="fixed top-20 right-4 sm:right-10 bg-slate-800 border border-slate-600 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 transform transition-all duration-300 translate-x-full opacity-0 z-[200]">
+        <i class="ph-fill ph-check-circle text-brand-green text-xl"></i>
+        <span class="text-sm font-semibold">Đã copy thành công!</span>
+    </div>
+
+    <!-- SCRIPTS -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+        import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-        // CẤU HÌNH FIREBASE
+        // === BẠN CHỈ CẦN SỬA 2 DÒNG NÀY ĐỂ ĐỔI NGÂN HÀNG ===
+        const MY_BANK_NAME = "MBBank"; 
+        const MY_BANK_ACCOUNT = "0817047222"; 
+        // ====================================================
+
         const firebaseConfig = {
             apiKey: "AIzaSyBIamnJhv5opEZ3D9dAJOWbW0YEBgSPPTc",
             authDomain: "bongda888.firebaseapp.com",
@@ -128,97 +152,137 @@
         };
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
 
-        // BẢO MẬT: Phải đăng nhập mới được nạp tiền
+        let currentUserCode = "";
+        let initialBalance = null;
+
+        // Set UI Bank ban đầu
+        document.getElementById('displayBankName').textContent = MY_BANK_NAME;
+        document.getElementById('displayBankAcc').textContent = MY_BANK_ACCOUNT;
+
         onAuthStateChanged(auth, (user) => {
             if (!user) {
                 window.location.href = "login.html";
             } else {
                 document.getElementById('mainBody').classList.remove('hidden');
-                loadBalance();
+                
+                currentUserCode = user.uid.substring(0, 6).toUpperCase();
+                document.getElementById('userCodeDisplay').textContent = currentUserCode;
+
+                // Lắng nghe Realtime từ Firestore
+                const userRef = doc(db, "users", user.uid);
+                onSnapshot(userRef, (docSnap) => {
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        const currentBalance = data.balance || 0;
+                        
+                        document.getElementById('userBalanceDisplay').textContent = currentBalance.toLocaleString('vi-VN');
+
+                        if (initialBalance !== null && currentBalance > initialBalance) {
+                            paymentSuccess(currentBalance - initialBalance);
+                        }
+                        initialBalance = currentBalance;
+                    }
+                });
             }
         });
 
-        let currentBalance = 0;
-        function loadBalance() {
-            const savedBalance = localStorage.getItem('userBalance');
-            currentBalance = savedBalance ? parseInt(savedBalance) : 1000;
-            document.getElementById('userBalanceDisplay').textContent = currentBalance.toLocaleString('vi-VN');
-        }
-
-        // HÀM GLOBAL CHO HTML
-        window.setAmount = setAmount;
+        // Hàm Global
         window.handleInput = handleInput;
-        window.simulatePayment = simulatePayment;
+        window.copyText = copyText;
 
         let debounceTimer;
 
-        // Bấm nút tiền nhanh
-        function setAmount(amount) {
-            document.getElementById('amountInput').value = amount;
-            handleInput();
-        }
-
-        // Xử lý khi gõ tiền
         function handleInput() {
             clearTimeout(debounceTimer);
             const input = document.getElementById('amountInput').value;
             const amount = parseInt(input);
             const errorMsg = document.getElementById('errorMsg');
-            const xuReceive = document.getElementById('xuReceive');
             const qrImage = document.getElementById('qrImage');
             const qrPlaceholder = document.getElementById('qrPlaceholder');
-            const confirmBtn = document.getElementById('confirmTransferBtn');
+            const waitingStatus = document.getElementById('waitingStatus');
+            const successStatus = document.getElementById('successStatus');
+            const infoBox = document.getElementById('transferInfoBox');
 
-            if (!amount || amount < 3000) {
+            if (!amount || amount < 10000) {
                 errorMsg.classList.remove('hidden');
-                xuReceive.textContent = "0";
                 qrImage.classList.add('hidden');
                 qrPlaceholder.classList.remove('hidden');
-                confirmBtn.classList.add('hidden');
+                waitingStatus.classList.add('hidden');
+                successStatus.classList.add('hidden');
+                infoBox.classList.remove('flex');
+                infoBox.classList.add('hidden');
                 return;
             }
 
-            // Hợp lệ
             errorMsg.classList.add('hidden');
-            xuReceive.textContent = amount.toLocaleString('vi-VN');
+            waitingStatus.classList.remove('hidden');
+            waitingStatus.classList.add('flex');
+            successStatus.classList.add('hidden');
 
-            // Delay 500ms để người dùng gõ xong mới load ảnh API cho mượt
+            // Hiển thị khung copy
+            infoBox.classList.remove('hidden');
+            infoBox.classList.add('flex');
+
             debounceTimer = setTimeout(() => {
-                // Tạo random mã GD
-                const randomCode = "NAPXU" + Math.floor(1000 + Math.random() * 9000);
+                // TẠO CÚ PHÁP CHUẨN
+                const transferContent = `NAPXU ${currentUserCode}`;
                 
-                // Link API Sepay (Ngân hàng nhận là MBBank, STK là 4477040408)
-                const qrUrl = `https://qr.sepay.vn/img?acc=4477040408&bank=MBBank&amount=${amount}&des=${randomCode}&template=compact`;
+                // Đẩy ra giao diện Copy
+                document.getElementById('displayAmount').textContent = amount.toLocaleString('vi-VN') + " ₫";
+                document.getElementById('displaySyntax').textContent = transferContent;
+                
+                // GEN QR ĐÃ BAO GỒM SỐ TIỀN VÀ NỘI DUNG (encodeURIComponent để không bị lỗi dấu cách)
+                const qrUrl = `https://qr.sepay.vn/img?acc=${MY_BANK_ACCOUNT}&bank=${MY_BANK_NAME}&amount=${amount}&des=${encodeURIComponent(transferContent)}&template=compact`;
                 
                 qrImage.src = qrUrl;
                 qrPlaceholder.classList.add('hidden');
                 qrImage.classList.remove('hidden');
-                confirmBtn.classList.remove('hidden');
-            }, 500);
+            }, 400);
         }
 
-        // GIẢ LẬP GIAO DỊCH (DÀNH CHO TEST FRONTEND)
-        function simulatePayment() {
-            const input = document.getElementById('amountInput').value;
-            const amount = parseInt(input);
-            const btn = document.getElementById('confirmTransferBtn');
-            const msg = document.getElementById('loadingMsg');
+        // HÀM COPY NHANH
+        function copyText(elementId, isAmount = false) {
+            let textToCopy = document.getElementById(elementId).textContent;
+            
+            // Nếu copy số tiền, phải xóa bỏ dấu chấm và ký hiệu ₫ để dán vào App ngân hàng không bị lỗi
+            if(isAmount) {
+                textToCopy = textToCopy.replace(/[^0-9]/g, '');
+            }
 
-            btn.classList.add('hidden');
-            msg.classList.remove('hidden');
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const toast = document.getElementById('copyToast');
+                toast.classList.remove('translate-x-full', 'opacity-0');
+                
+                setTimeout(() => {
+                    toast.classList.add('translate-x-full', 'opacity-0');
+                }, 2000);
+            });
+        }
 
-            // Đợi 2.5 giây mô phỏng hệ thống đang check ngân hàng
+        // XỬ LÝ KHI FIREBASE BÁO CỘNG TIỀN THÀNH CÔNG
+        function paymentSuccess(amountAdded) {
+            document.getElementById('waitingStatus').classList.remove('flex');
+            document.getElementById('waitingStatus').classList.add('hidden');
+            
+            const successEl = document.getElementById('successStatus');
+            successEl.classList.remove('hidden');
+            successEl.classList.add('flex');
+            
+            // Reset form
+            document.getElementById('amountInput').value = '';
+            document.getElementById('qrImage').classList.add('hidden');
+            document.getElementById('qrPlaceholder').classList.remove('hidden');
+            document.getElementById('transferInfoBox').classList.add('hidden');
+            document.getElementById('transferInfoBox').classList.remove('flex');
+
+            // Tạo hiệu ứng rung cho số dư ở Header
+            const balanceDisplay = document.getElementById('userBalanceDisplay');
+            balanceDisplay.classList.add('text-brand-green', 'scale-125', 'transition-all');
             setTimeout(() => {
-                // Cộng tiền vào LocalStorage
-                currentBalance += amount;
-                localStorage.setItem('userBalance', currentBalance);
-                
-                alert(`Giao dịch thành công! Đã nạp ${amount.toLocaleString('vi-VN')} Xu vào tài khoản.`);
-                
-                // Trở về trang chủ
-                window.location.href = "home.html";
-            }, 2500);
+                balanceDisplay.classList.remove('text-brand-green', 'scale-125');
+            }, 1000);
         }
     </script>
 </body>
