@@ -26,10 +26,10 @@
                 <i class="ph-fill ph-soccer-ball text-4xl text-brand-blue animate-spin-slow"></i>
             </div>
             <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight mb-1">Tạo tài khoản mới</h1>
-            <p class="text-sm text-gray-400">Tham gia dự đoán World Cup ngay hôm nay</p>
+            <p class="text-sm text-gray-400">Tham gia dự đoán bóng đá ngay hôm nay</p>
         </div>
 
-        <div id="messageBox" class="hidden mb-6 p-4 rounded-xl text-sm font-semibold flex items-center gap-2 border">
+        <div id="messageBox" class="hidden mb-6 p-4 rounded-xl text-sm font-semibold flex items-center gap-2 border transition-all">
             <i id="messageIcon" class="text-xl"></i>
             <span id="messageText"></span>
         </div>
@@ -75,17 +75,8 @@
                 </div>
             </div>
 
-            <div class="flex items-start gap-3 py-2">
-                <div class="flex items-center h-5">
-                    <input id="terms" type="checkbox" required class="w-4 h-4 bg-slate-950 border-slate-700 rounded text-brand-blue focus:ring-brand-blue focus:ring-2">
-                </div>
-                <label for="terms" class="text-sm text-gray-400 leading-tight">
-                    Tôi xác nhận mọi thông tin đăng ký phía trên là hoàn toàn chính xác.
-                </label>
-            </div>
-
-            <button type="submit" id="submitBtn" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-blue-500/30 flex justify-center items-center gap-2 mt-2">
-                <span>Đăng Ký</span>
+            <button type="submit" id="submitBtn" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-blue-500/30 flex justify-center items-center gap-2 mt-4 active:scale-95">
+                <span>Đăng Ký Ngay</span>
             </button>
         </form>
 
@@ -94,10 +85,10 @@
         </p>
     </div>
 
+    <!-- SCRIPTS -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-        // Bắt buộc phải import Firestore để lưu UserCode
         import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
         const firebaseConfig = {
@@ -134,7 +125,7 @@
             messageText.textContent = msg;
         }
 
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const email = document.getElementById('email').value;
@@ -142,64 +133,54 @@
             const password = document.getElementById('password').value;
             const repassword = document.getElementById('repassword').value;
 
-            // Validate cơ bản
             if (password !== repassword) {
-                showMessage("Mật khẩu nhập lại không khớp!", "error");
-                return;
+                showMessage("Mật khẩu nhập lại không khớp!", "error"); return;
             }
             if (password.length < 6) {
-                showMessage("Mật khẩu phải dài ít nhất 6 ký tự.", "error");
-                return;
+                showMessage("Mật khẩu phải từ 6 ký tự trở lên.", "error"); return;
             }
 
-            // Hiệu ứng Loading
             submitBtn.disabled = true;
-            submitBtn.innerHTML = `<i class="ph ph-spinner-gap animate-spin text-xl"></i> Đang xử lý...`;
+            submitBtn.innerHTML = `<i class="ph ph-spinner-gap animate-spin text-xl"></i> Đang tạo tài khoản...`;
 
-            // 1. Tạo tài khoản Auth
-            createUserWithEmailAndPassword(auth, email, password)
-                .then(async (userCredential) => {
-                    const user = userCredential.user;
-                    
-                    // 2. Tạo UserCode (6 ký tự đầu của UID)
-                    const userCode = user.uid.substring(0, 6).toUpperCase();
+            try {
+                // Bước 1: Tạo tài khoản Đăng nhập
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                
+                // Bước 2: Tạo mã UserCode
+                const userCode = user.uid.substring(0, 6).toUpperCase();
 
-                    // 3. Ghi dữ liệu vào Firestore Database
-                    try {
-                        await setDoc(doc(db, "users", user.uid), {
-                            email: user.email,
-                            phone: phone,
-                            userCode: userCode,
-                            balance: 0, // Khởi tạo ví 0 Xu
-                            createdAt: new Date().toISOString()
-                        });
-
-                        // Khởi tạo cả lịch sử cược rỗng trên LocalStorage cho mượt
-                        localStorage.setItem('userBalance', '0');
-                        localStorage.setItem('betHistory', '[]');
-
-                        showMessage("Tạo tài khoản thành công! Đang vào sảnh...", "success");
-                        setTimeout(() => { window.location.href = "home.html"; }, 1500);
-
-                    } catch (dbError) {
-                        console.error("Lỗi tạo DB:", dbError);
-                        showMessage("Lỗi hệ thống khi khởi tạo ví!", "error");
-                        submitBtn.disabled = false;
-                        submitBtn.innerHTML = `Đăng Ký`;
-                    }
-                })
-                .catch((error) => {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = `Đăng Ký`;
-                    
-                    // Bắt lỗi Tiếng Việt
-                    let errorMsg = "Có lỗi xảy ra, vui lòng thử lại.";
-                    if (error.code === 'auth/email-already-in-use') errorMsg = "Email này đã được đăng ký từ trước.";
-                    else if (error.code === 'auth/invalid-email') errorMsg = "Định dạng email không hợp lệ.";
-                    else if (error.code === 'auth/operation-not-allowed') errorMsg = "Firebase chưa bật tính năng Đăng ký Email/Mật khẩu.";
-                    
-                    showMessage(errorMsg, "error");
+                // Bước 3: Tạo Ví trên Firestore (Nếu chỗ này treo, Code mới sẽ bắt được lỗi)
+                await setDoc(doc(db, "users", user.uid), {
+                    email: user.email,
+                    phone: phone,
+                    userCode: userCode,
+                    balance: 0,
+                    createdAt: new Date().toISOString()
                 });
+
+                // Khởi tạo ví 0 đồng trên LocalStorage để load nhanh
+                localStorage.setItem('userBalance', '0');
+                localStorage.setItem('betHistory', '[]');
+
+                showMessage("Tạo tài khoản thành công! Đang vào sảnh...", "success");
+                setTimeout(() => { window.location.href = "home.html"; }, 1500);
+
+            } catch (error) {
+                console.error(error);
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `<span>Đăng Ký Ngay</span>`;
+                
+                // Bắt chính xác lỗi để báo cho bạn
+                if (error.code === 'auth/email-already-in-use') {
+                    showMessage("Email này đã được sử dụng!", "error");
+                } else if (error.code === 'permission-denied') {
+                    showMessage("LỖI QUAN TRỌNG: Bạn chưa tạo Firestore Database hoặc chưa đặt Rules sang Test Mode! Hãy xem lại hướng dẫn.", "error");
+                } else {
+                    showMessage("Lỗi: " + error.message, "error");
+                }
+            }
         });
     </script>
 </body>
