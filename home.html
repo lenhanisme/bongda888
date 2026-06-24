@@ -18,11 +18,8 @@
         .glass-nav { background: rgba(2, 6, 23, 0.8); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.05); }
         .glass-card { background: linear-gradient(145deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
         .live-glow { box-shadow: 0 0 20px rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4); }
-        
-        /* Ẩn scrollbar cho thanh menu thể thao */
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #020617; }
         ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
@@ -80,10 +77,10 @@
                     Hệ Thống Đa Thể Thao ESP Premium
                 </div>
                 <h1 class="text-2xl sm:text-3xl md:text-4xl font-black mb-2 text-white relative z-10 tracking-tight leading-tight drop-shadow-md">Giải Trí Đỉnh Cao - Trả Thưởng Auto!</h1>
-                <p class="text-gray-400 text-xs sm:text-sm md:text-base mb-5 sm:mb-6 relative z-10 max-w-xl leading-relaxed">Cung cấp dữ liệu trực tiếp 10 bộ môn thể thao Hot nhất. Từ Bóng đá, Bi-a đến eSports. Trúng kèo hệ thống tự động cộng Xu trong 1 giây.</p>
+                <p class="text-gray-400 text-xs sm:text-sm md:text-base mb-5 sm:mb-6 relative z-10 max-w-xl leading-relaxed">Luôn đảm bảo 100% full sảnh 10 môn thể thao Hot nhất. Dữ liệu siêu tốc, auto trả thưởng sòng phẳng trong 1 nốt nhạc.</p>
                 <div class="relative z-10 flex gap-3">
                     <button onclick="fetchAllData()" class="inline-flex items-center justify-center gap-2 bg-white text-black hover:bg-gray-200 font-black px-5 sm:px-6 py-3 rounded-full transition text-sm shadow-[0_0_20px_rgba(255,255,255,0.2)] active:scale-95">
-                        <i class="ph-bold ph-arrows-clockwise text-lg"></i> Cập Nhật Nhanh
+                        <i class="ph-bold ph-arrows-clockwise text-lg"></i> Cập Nhật Kèo
                     </button>
                 </div>
             </div>
@@ -110,7 +107,7 @@
                         <div class="absolute inset-0 border-4 border-brand-blue rounded-full border-t-transparent animate-spin"></div>
                         <i class="ph-fill ph-globe-hemisphere-west text-3xl text-brand-blue absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></i>
                     </div>
-                    <p class="text-gray-300 text-sm sm:text-base font-bold tracking-widest uppercase">Đang quét máy chủ toàn cầu...</p>
+                    <p class="text-gray-300 text-sm sm:text-base font-bold tracking-widest uppercase">Đang quét máy chủ đa thể thao...</p>
                 </div>
             </div>
         </section>
@@ -118,57 +115,41 @@
 
     <div id="predictionModal" class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md hidden items-end sm:items-center justify-center p-0 sm:p-4 opacity-0 transition-opacity duration-300">
         <div class="glass-card border-slate-700/50 rounded-t-[30px] sm:rounded-3xl w-full max-w-md overflow-hidden transform translate-y-full sm:translate-y-0 sm:scale-95 transition-transform duration-300 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] flex flex-col max-h-[90vh]" id="modalContent">
-            <div class="w-full flex justify-center pt-3 pb-2 sm:hidden" onclick="closeModal()">
-                <div class="w-12 h-1.5 bg-slate-600 rounded-full"></div>
-            </div>
+            <div class="w-full flex justify-center pt-3 pb-2 sm:hidden" onclick="closeModal()"><div class="w-12 h-1.5 bg-slate-600 rounded-full"></div></div>
             <div class="px-5 pb-3 sm:p-6 flex justify-between items-center relative">
                 <div class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-slate-600 to-transparent"></div>
-                <h3 class="font-black text-base sm:text-lg text-white flex items-center gap-2 tracking-tight uppercase">
-                    <i class="ph-duotone ph-crosshair text-brand-blue text-2xl"></i> Phiếu Chốt Kèo
-                </h3>
+                <h3 class="font-black text-base sm:text-lg text-white flex items-center gap-2 tracking-tight uppercase"><i class="ph-duotone ph-crosshair text-brand-blue text-2xl"></i> Phiếu Chốt Kèo</h3>
                 <button onclick="closeModal()" class="text-gray-500 hover:text-white transition bg-slate-800/50 rounded-full p-1.5"><i class="ph-bold ph-x text-lg sm:text-xl"></i></button>
             </div>
-            
             <div class="p-5 sm:p-6 overflow-y-auto">
                 <div id="modalSportBadge" class="text-[10px] font-black text-gray-400 text-center uppercase tracking-widest mb-1">MÔN THỂ THAO</div>
                 <div id="modalMatchInfo" class="text-center font-black text-xl sm:text-2xl mb-6 text-white tracking-tighter leading-tight drop-shadow-md px-2">Đội A vs Đội B</div>
-                
                 <div class="mb-6">
                     <label class="block text-xs sm:text-sm font-bold text-gray-400 mb-3 uppercase tracking-wider">Tỉ lệ cược (Multiplier):</label>
                     <div class="grid grid-cols-3 gap-2 sm:gap-3" id="betOptionsContainer"></div>
                 </div>
-
                 <div class="mb-6">
                     <label class="block text-xs sm:text-sm font-bold text-gray-400 mb-3 uppercase tracking-wider">Số vốn đầu tư (Xu):</label>
                     <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                            <i class="ph-fill ph-coins text-brand-yellow text-xl drop-shadow-md"></i>
-                        </div>
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"><i class="ph-fill ph-coins text-brand-yellow text-xl drop-shadow-md"></i></div>
                         <input type="number" id="betAmount" oninput="calculatePayout()" min="100" placeholder="Tối thiểu 100" class="w-full bg-black/50 border border-slate-700/50 text-white rounded-2xl pl-12 pr-4 py-3.5 sm:py-4 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition font-black text-lg sm:text-xl font-mono">
                     </div>
                     <p id="betError" class="text-red-400 text-[11px] sm:text-xs mt-2 hidden flex items-center gap-1 font-bold"><i class="ph-fill ph-warning-circle text-sm"></i> <span></span></p>
                 </div>
-
                 <div class="bg-gradient-to-r from-brand-blue/10 to-transparent border-l-4 border-brand-blue rounded-r-xl p-4 mb-8 flex justify-between items-center">
                     <span class="text-xs sm:text-sm font-bold text-gray-300">Lợi nhuận dự kiến:</span>
                     <span id="potentialPayout" class="font-black text-xl sm:text-2xl text-brand-blue truncate max-w-[60%] text-right font-mono drop-shadow-sm">0</span>
                 </div>
-
-                <button onclick="confirmBet()" id="confirmBetBtn" class="w-full bg-gradient-to-r from-brand-green to-emerald-600 text-white font-black py-4 sm:py-4 rounded-2xl transition shadow-[0_10px_20px_rgba(16,185,129,0.3)] text-base sm:text-lg uppercase tracking-widest active:scale-95 active:shadow-none hover:from-emerald-500 hover:to-green-500">
-                    Chốt Lời Ngay
-                </button>
+                <button onclick="confirmBet()" id="confirmBetBtn" class="w-full bg-gradient-to-r from-brand-green to-emerald-600 text-white font-black py-4 sm:py-4 rounded-2xl transition shadow-[0_10px_20px_rgba(16,185,129,0.3)] text-base sm:text-lg uppercase tracking-widest active:scale-95 active:shadow-none hover:from-emerald-500 hover:to-green-500">Chốt Lời Ngay</button>
             </div>
         </div>
     </div>
 
     <div id="successModal" class="fixed inset-0 z-[110] bg-black/90 backdrop-blur-md hidden items-center justify-center p-4 opacity-0 transition-opacity duration-300">
         <div class="glass-card border border-brand-green/30 rounded-3xl w-full max-w-sm overflow-hidden transform scale-95 transition-transform duration-400 shadow-[0_0_50px_rgba(16,185,129,0.2)] flex flex-col items-center p-6 sm:p-8 text-center" id="successModalContent">
-            <div class="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center mb-5 border border-green-500/20 shadow-[0_0_30px_rgba(16,185,129,0.3)]">
-                <i class="ph-fill ph-check-circle text-6xl text-brand-green drop-shadow-md"></i>
-            </div>
+            <div class="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center mb-5 border border-green-500/20 shadow-[0_0_30px_rgba(16,185,129,0.3)]"><i class="ph-fill ph-check-circle text-6xl text-brand-green drop-shadow-md"></i></div>
             <h3 class="font-black text-2xl sm:text-3xl text-white mb-1 tracking-tighter">Thành Công!</h3>
-            <p class="text-gray-400 text-xs sm:text-sm mb-5">Vé cược của bạn đã được ghi nhận vào hệ thống.</p>
-            
+            <p class="text-gray-400 text-xs sm:text-sm mb-5">Vé cược của bạn đã được ghi nhận.</p>
             <div class="w-full bg-black/40 p-4 rounded-2xl border border-white/5 mb-6 text-left space-y-3">
                 <div class="flex justify-between items-center"><span class="text-gray-500 text-xs uppercase font-bold">Trận:</span> <span class="font-bold text-white text-sm text-right truncate w-[70%]" id="successMatch"></span></div>
                 <div class="flex justify-between items-center"><span class="text-gray-500 text-xs uppercase font-bold">Cửa:</span> <span class="font-bold text-brand-blue text-sm flex items-center gap-1" id="successChoice"></span></div>
@@ -180,14 +161,10 @@
 
     <div id="historyModal" class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md hidden flex-col justify-end sm:items-center sm:justify-center p-0 sm:p-4 opacity-0 transition-opacity duration-300">
         <div class="glass-card border border-slate-700/50 rounded-t-[30px] sm:rounded-3xl w-full max-w-2xl h-[85vh] sm:h-auto sm:max-h-[85vh] flex flex-col overflow-hidden transform translate-y-full sm:translate-y-0 sm:scale-95 transition-transform duration-400 shadow-[0_-10px_50px_rgba(0,0,0,0.5)]" id="historyModalContent">
-            <div class="w-full flex justify-center pt-3 pb-2 sm:hidden" onclick="closeHistoryModal()">
-                <div class="w-12 h-1.5 bg-slate-600 rounded-full"></div>
-            </div>
+            <div class="w-full flex justify-center pt-3 pb-2 sm:hidden" onclick="closeHistoryModal()"><div class="w-12 h-1.5 bg-slate-600 rounded-full"></div></div>
             <div class="px-5 pb-3 sm:p-5 flex justify-between items-center relative z-10">
                 <div class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-slate-600 to-transparent"></div>
-                <h3 class="font-black text-lg sm:text-xl text-white flex items-center gap-2 uppercase tracking-tighter">
-                    <i class="ph-duotone ph-receipt text-brand-blue text-2xl"></i> Quản Lý Vé Cược
-                </h3>
+                <h3 class="font-black text-lg sm:text-xl text-white flex items-center gap-2 uppercase tracking-tighter"><i class="ph-duotone ph-receipt text-brand-blue text-2xl"></i> Quản Lý Vé Cược</h3>
                 <button onclick="closeHistoryModal()" class="text-gray-500 hover:text-white bg-slate-800/50 p-1.5 rounded-full transition"><i class="ph-bold ph-x text-xl"></i></button>
             </div>
             <div class="p-3 sm:p-5 overflow-y-auto flex-grow bg-black/20" id="historyList"></div>
@@ -196,9 +173,7 @@
 
     <div id="notificationModal" class="fixed inset-0 z-[120] bg-black/90 backdrop-blur-md hidden items-center justify-center p-4 opacity-0 transition-opacity duration-300">
         <div class="glass-card border rounded-3xl w-full max-w-sm overflow-hidden transform scale-95 transition-transform duration-300 shadow-2xl flex flex-col items-center p-6 sm:p-8 text-center" id="notificationModalContent">
-            <div id="notifIconWrapper" class="w-20 h-20 rounded-full flex items-center justify-center mb-5 border shadow-lg">
-                <i id="notifIcon" class="text-5xl"></i>
-            </div>
+            <div id="notifIconWrapper" class="w-20 h-20 rounded-full flex items-center justify-center mb-5 border shadow-lg"><i id="notifIcon" class="text-5xl"></i></div>
             <h3 id="notifTitle" class="font-black text-2xl text-white mb-2 tracking-tighter">Tiêu đề</h3>
             <p id="notifMessage" class="text-gray-400 text-sm mb-6 leading-relaxed">Nội dung</p>
             <button onclick="closeNotificationModal()" class="w-full bg-white text-black font-black py-3.5 rounded-xl transition active:scale-95">Đóng</button>
@@ -207,9 +182,7 @@
 
     <div id="confirmModal" class="fixed inset-0 z-[120] bg-black/90 backdrop-blur-md hidden items-center justify-center p-4 opacity-0 transition-opacity duration-300">
         <div class="glass-card border border-red-500/20 rounded-3xl w-full max-w-sm overflow-hidden transform scale-95 transition-transform duration-300 shadow-2xl flex flex-col items-center p-6 sm:p-8 text-center" id="confirmModalContent">
-            <div class="w-20 h-20 bg-red-500/10 rounded-full flex items-center justify-center mb-5 border border-red-500/20 shadow-[0_0_20px_rgba(239,68,68,0.2)]">
-                <i class="ph-duotone ph-sign-out text-5xl text-red-500"></i>
-            </div>
+            <div class="w-20 h-20 bg-red-500/10 rounded-full flex items-center justify-center mb-5 border border-red-500/20 shadow-[0_0_20px_rgba(239,68,68,0.2)]"><i class="ph-duotone ph-sign-out text-5xl text-red-500"></i></div>
             <h3 class="font-black text-2xl text-white mb-2 tracking-tighter">Rời Khỏi Sảnh?</h3>
             <p class="text-gray-400 text-sm mb-6">Bạn có chắc chắn muốn đăng xuất tài khoản?</p>
             <div class="flex gap-3 w-full">
@@ -241,7 +214,7 @@
             else { document.getElementById('mainBody').classList.remove('hidden'); initUserDashboard(); }
         });
 
-        // ================= DANH SÁCH 10 MÔN THỂ THAO =================
+        // DANH SÁCH 10 MÔN THỂ THAO
         const SPORTS_CONFIG = [
             { id: 'all', name: 'Tất Cả', icon: 'ph-infinity' },
             { id: 'soccer', name: 'Bóng Đá', icon: 'ph-soccer-ball', api: 'https://site.api.espn.com/apis/site/v2/sports/soccer/all/scoreboard' },
@@ -249,7 +222,6 @@
             { id: 'tennis', name: 'Tennis', icon: 'ph-tennis-ball', api: 'https://site.api.espn.com/apis/site/v2/sports/tennis/atp/scoreboard' },
             { id: 'baseball', name: 'Bóng Chày', icon: 'ph-baseball', api: 'https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard' },
             { id: 'football', name: 'B.Bầu Dục', icon: 'ph-american-football', api: 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard' },
-            // Các môn dưới đây dùng dữ liệu Mô phỏng (Simulated) để đảm bảo luôn có kèo 24/7
             { id: 'billiards', name: 'Bi-a', icon: 'ph-number-circle-eight', isMock: true },
             { id: 'esports', name: 'eSports', icon: 'ph-game-controller', isMock: true },
             { id: 'volleyball', name: 'Bóng Chuyền', icon: 'ph-volleyball', isMock: true },
@@ -259,8 +231,6 @@
 
         let globalMatches = [];
         let activeSportFilter = 'all';
-
-        // ================= GIAO DIỆN & VÍ =================
         let currentBalance = 0;
         let activeMatchData = null; 
 
@@ -297,8 +267,7 @@
             giftMessage.textContent = "+500 Xu (Kho đồ)"; giftMessage.classList.remove('hidden');
         });
 
-        // ================= THUẬT TOÁN ĐA THỂ THAO =================
-
+        // MENU LỌC THỂ THAO
         function renderSportTabs() {
             const container = document.getElementById('sportsFilterContainer');
             container.innerHTML = SPORTS_CONFIG.map(sport => `
@@ -327,6 +296,7 @@
             }
         }
 
+        // TẢI TOÀN BỘ DATA (API + MOCK AUTO FILL)
         window.fetchAllData = async function() {
             const container = document.getElementById('leagues-container');
             container.innerHTML = `
@@ -341,46 +311,52 @@
             
             globalMatches = [];
             
-            // 1. Kéo API thực tế song song
+            // 1. Kéo API thực tế (Safe Mode)
             const apiSports = SPORTS_CONFIG.filter(s => s.api);
             const fetchPromises = apiSports.map(async (sport) => {
                 try {
-                    const res = await fetch(`${sport.api}?limit=40`);
-                    if(!res.ok) return;
+                    const res = await fetch(`${sport.api}?limit=20`);
+                    if(!res.ok) throw new Error('Bad HTTP status');
                     const data = await res.json();
-                    if(data.events) {
+                    
+                    if(data.events && data.events.length > 0) {
                         data.events.forEach(match => {
-                            globalMatches.push(normalizeESPNMatch(match, sport));
+                            try { globalMatches.push(normalizeESPNMatch(match, sport)); }
+                            catch(e) {} // Bỏ qua nếu cấu trúc trận đấu bị lỗi
                         });
+                    } else {
+                        // NẾU API TRẢ VỀ RỖNG (Off-season) -> TỰ BƠM MOCK DATA
+                        globalMatches = globalMatches.concat(generateMockData(sport));
                     }
-                } catch(e) { console.warn(`Lỗi fetch API ${sport.name}`); }
+                } catch(e) { 
+                    // NẾU API LỖI MẠNG -> TỰ BƠM MOCK DATA
+                    globalMatches = globalMatches.concat(generateMockData(sport));
+                }
             });
 
             await Promise.allSettled(fetchPromises);
 
-            // 2. Sinh dữ liệu Mô phỏng cho các môn hiếm
+            // 2. Bơm Data cho các môn chuyên Mock
             const mockSports = SPORTS_CONFIG.filter(s => s.isMock);
             mockSports.forEach(sport => {
-                const mocks = generateMockData(sport);
-                globalMatches = globalMatches.concat(mocks);
+                globalMatches = globalMatches.concat(generateMockData(sport));
             });
 
-            // 3. Trả thưởng & Hiển thị
             resolveBetsAuto();
             renderMatchesToDOM();
         }
 
-        // ================= ĐỒNG NHẤT OBJECT TRẬN ĐẤU =================
+        // BÓC TÁCH THÔNG MINH (TRÁNH CRASH CODE)
         function normalizeESPNMatch(espnEvent, sportConfig) {
             const comp = espnEvent.competitions[0];
-            const home = comp.competitors.find(c => c.homeAway === 'home') || comp.competitors[0];
-            const away = comp.competitors.find(c => c.homeAway === 'away') || comp.competitors[1];
+            const hC = comp.competitors.find(c => c.homeAway === 'home') || comp.competitors[0];
+            const aC = comp.competitors.find(c => c.homeAway === 'away') || comp.competitors[1];
             
             let leagueName = "GIẢI ĐẤU KHÁC";
             if(espnEvent.season && espnEvent.season.slug) leagueName = espnEvent.season.slug.toUpperCase().replace(/-/g, ' ');
             else if(espnEvent.name) leagueName = espnEvent.name;
 
-            // Xử lý Scorers (Riêng bóng đá)
+            // Xử lý Người ghi bàn (Chỉ áp dụng cho bóng đá)
             let homeDetail='', awayDetail='';
             if(sportConfig.id === 'soccer' && comp.details) {
                 let hArr=[], aArr=[];
@@ -390,66 +366,89 @@
                         if (d.participants && d.participants[0] && d.participants[0].athlete) pName = d.participants[0].athlete.shortName || pName;
                         const time = d.clock ? d.clock.displayValue + "'" : "";
                         const str = time ? `${pName} ${time}` : pName;
-                        if(d.team && d.team.id === home.team.id) hArr.push(str); else aArr.push(str);
+                        
+                        const teamId = d.team ? d.team.id : null;
+                        const homeId = hC.team ? hC.team.id : (hC.id || null);
+                        
+                        if(teamId && homeId && teamId === homeId) hArr.push(str); 
+                        else if (teamId) aArr.push(str);
                     }
                 });
                 homeDetail = hArr.join(', '); awayDetail = aArr.join(', ');
             }
 
+            // Hàm chiết xuất tên & avatar thông minh cho Cá nhân hoặc Đội
+            const extractInfo = (c) => {
+                if(!c) return { n: 'Unknown', s: 0, l: 'https://ui-avatars.com/api/?name=U&background=random' };
+                let n = 'Unknown', l = 'https://ui-avatars.com/api/?name=U&background=random', s = parseInt(c.score)||0;
+                if(c.team) {
+                    n = c.team.displayName || c.team.name || n;
+                    l = c.team.logo || l;
+                } else if(c.athlete) {
+                    n = c.athlete.displayName || c.athlete.shortName || n;
+                    l = (c.athlete.flag && c.athlete.flag.href) ? c.athlete.flag.href : `https://ui-avatars.com/api/?name=${encodeURIComponent(n)}&background=random`;
+                } else {
+                    n = c.displayName || c.name || n;
+                }
+                return { n: n.replace(/'/g, ""), s, l };
+            };
+
+            const hInfo = extractInfo(hC);
+            const aInfo = extractInfo(aC);
+
             return {
-                id: espnEvent.id,
-                sportId: sportConfig.id,
-                sportName: sportConfig.name,
-                sportIcon: sportConfig.icon,
-                leagueName: leagueName,
-                status: espnEvent.status.type.state, // 'pre', 'in', 'post'
-                statusText: espnEvent.status.type.shortDetail,
+                id: espnEvent.id, sportId: sportConfig.id, sportName: sportConfig.name, sportIcon: sportConfig.icon,
+                leagueName: leagueName, status: espnEvent.status.type.state, statusText: espnEvent.status.type.shortDetail,
                 date: new Date(espnEvent.date),
-                home: { name: home.team.name.replace(/'/g, ""), score: parseInt(home.score)||0, logo: home.team.logo || 'https://ui-avatars.com/api/?name=H&background=random', detail: homeDetail },
-                away: { name: away.team.name.replace(/'/g, ""), score: parseInt(away.score)||0, logo: away.team.logo || 'https://ui-avatars.com/api/?name=A&background=random', detail: awayDetail }
+                home: { name: hInfo.n, score: hInfo.s, logo: hInfo.l, detail: homeDetail },
+                away: { name: aInfo.n, score: aInfo.s, logo: aInfo.l, detail: awayDetail }
             };
         }
 
+        // TỰ ĐỘNG SINH DỮ LIỆU ĐỂ LUÔN FULL SẢNH
         function generateMockData(sportConfig) {
-            const matches = [];
-            const isLive = Math.random() > 0.3; // 70% chance to have a live match
-            let league = "World Championship";
-            let t1, t2;
+            const isLive = Math.random() > 0.4;
+            let sH = isLive ? Math.floor(Math.random()*5) : 0;
+            let sA = isLive ? Math.floor(Math.random()*5) : 0;
+            let stat = isLive ? 'in' : 'pre';
+            let sTxt = isLive ? "Trực Tiếp" : "Sắp diễn ra";
+            
+            let t1, t2, league;
 
-            if(sportConfig.id === 'billiards') {
-                league = "🎱 WORLD POOL MASTERS";
-                t1 = { n:"Shane V. Boening", l:"https://ui-avatars.com/api/?name=SVB&background=1e293b&color=fff" };
-                t2 = { n:"Joshua Filler", l:"https://ui-avatars.com/api/?name=JF&background=020617&color=fff" };
-            } else if(sportConfig.id === 'esports') {
-                league = "🎮 CS2 MAJOR COPENHAGEN";
-                t1 = { n:"T1", l:"https://ui-avatars.com/api/?name=T1&background=e11d48&color=fff" };
-                t2 = { n:"Natus Vincere", l:"https://ui-avatars.com/api/?name=NV&background=fbbf24&color=000" };
-            } else if(sportConfig.id === 'volleyball') {
-                league = "🏐 VNL NATIONS LEAGUE";
-                t1 = { n:"Brazil", l:"https://ui-avatars.com/api/?name=BRA&background=22c55e&color=fff" };
-                t2 = { n:"Italy", l:"https://ui-avatars.com/api/?name=ITA&background=3b82f6&color=fff" };
-            } else {
-                league = `${sportConfig.icon} GRAND SLAM`;
-                t1 = { n:"Player 1", l:"https://ui-avatars.com/api/?name=P1&background=random" };
-                t2 = { n:"Player 2", l:"https://ui-avatars.com/api/?name=P2&background=random" };
+            switch(sportConfig.id) {
+                case 'soccer': league="⚽ GIAO HỮU QUỐC TẾ"; t1={n:"Việt Nam"}; t2={n:"Thái Lan"}; break;
+                case 'basketball': league="🏀 NBA G-LEAGUE"; t1={n:"Lakers"}; t2={n:"Warriors"}; sH+=80; sA+=80; break;
+                case 'tennis': league="🎾 WIMBLEDON MASTERS"; t1={n:"Nadal"}; t2={n:"Djokovic"}; sH=1; sA=2; break;
+                case 'baseball': league="⚾ MLB SERIES"; t1={n:"Yankees"}; t2={n:"Red Sox"}; break;
+                case 'football': league="🏈 NFL SUPER BOWL"; t1={n:"Chiefs"}; t2={n:"Eagles"}; sH+=14; sA+=21; break;
+                case 'billiards': league="🎱 WORLD POOL MASTERS"; t1={n:"S. Boening"}; t2={n:"J. Filler"}; break;
+                case 'esports': league="🎮 LCK MÙA XUÂN"; t1={n:"T1"}; t2={n:"Gen.G"}; break;
+                case 'volleyball': league="🏐 NATIONS LEAGUE"; t1={n:"Brazil"}; t2={n:"Italy"}; break;
+                case 'badminton': league="🏸 ALL ENGLAND OPEN"; t1={n:"Axelsen"}; t2={n:"Momota"}; break;
+                case 'tabletennis': league="🏓 WTT CHAMPIONS"; t1={n:"Ma Long"}; t2={n:"Fan Zhendong"}; break;
+                default: league="🏆 GIẢI ĐẤU KHÁC"; t1={n:"Đội A"}; t2={n:"Đội B"};
             }
+            
+            t1.l = `https://ui-avatars.com/api/?name=${encodeURIComponent(t1.n)}&background=1e293b&color=fff`;
+            t2.l = `https://ui-avatars.com/api/?name=${encodeURIComponent(t2.n)}&background=020617&color=fff`;
 
-            let sH=0, sA=0, stat='pre', sTxt='Sắp diễn ra';
-            if(isLive) {
-                sH = Math.floor(Math.random()*5); sA = Math.floor(Math.random()*5);
-                stat = 'in'; sTxt = "Trực Tiếp";
-            }
-
-            matches.push({
-                id: `mock_${sportConfig.id}_1`, sportId: sportConfig.id, sportName: sportConfig.name, sportIcon: sportConfig.icon,
+            return [{
+                id: `mock_${sportConfig.id}_${Date.now()}`, sportId: sportConfig.id, sportName: sportConfig.name, sportIcon: sportConfig.icon,
                 leagueName: league, status: stat, statusText: sTxt, date: new Date(),
                 home: { name: t1.n, score: sH, logo: t1.l, detail: '' },
                 away: { name: t2.n, score: sA, logo: t2.l, detail: '' }
-            });
-            return matches;
+            }];
         }
 
-        // ================= HIỂN THỊ DỮ LIỆU ĐÃ LỌC =================
+        function generateOdds(homeScore, awayScore, isLive) {
+            let h = 2.05, d = 3.20, a = 2.05; 
+            if (homeScore > awayScore) { h = 1.15; d = 5.50; a = 9.80; } 
+            else if (awayScore > homeScore) { h = 9.80; d = 5.50; a = 1.15; } 
+            else if (homeScore === awayScore && isLive) { h = 2.50; d = 1.90; a = 2.50; }
+            return { home: h.toFixed(2), draw: d.toFixed(2), away: a.toFixed(2) };
+        }
+
+        // RENDER GIAO DIỆN
         function renderMatchesToDOM() {
             const container = document.getElementById('leagues-container');
             let filtered = globalMatches;
@@ -458,17 +457,15 @@
             }
 
             if(filtered.length === 0) {
-                container.innerHTML = '<div class="text-center py-16 glass-card rounded-[24px]"><i class="ph-duotone ph-calendar-x text-5xl mb-3 text-slate-500"></i><p class="text-gray-400 font-bold">Không có trận đấu nào cho bộ môn này.</p></div>'; return;
+                container.innerHTML = '<div class="text-center py-16 glass-card rounded-[24px]"><i class="ph-duotone ph-calendar-x text-5xl mb-3 text-slate-500"></i><p class="text-gray-400 font-bold">Không có trận đấu nào.</p></div>'; return;
             }
 
-            // GOM NHÓM THEO GIẢI ĐẤU
             const leaguesMap = {};
             filtered.forEach(m => {
                 if(!leaguesMap[m.leagueName]) leaguesMap[m.leagueName] = { name: m.leagueName, sport: m.sportName, icon: m.sportIcon, matches: [] };
                 leaguesMap[m.leagueName].matches.push(m);
             });
 
-            // SẮP XẾP: Giải có trận LIVE lên đầu
             Object.values(leaguesMap).forEach(league => {
                 league.hasLive = league.matches.some(m => m.status === 'in');
                 league.matches.sort((a,b) => {
@@ -486,7 +483,6 @@
 
             container.innerHTML = '';
             sortedLeagues.forEach(league => {
-                const isWC = league.name.includes('WORLD CUP');
                 let headerHTML = `<div class="border-b border-white/5 pb-2 sm:pb-3 mb-4 sm:mb-6 mt-6 sm:mt-8">
                     <h3 class="text-base sm:text-lg font-black text-gray-200 uppercase flex items-center gap-2"><i class="ph-fill ${league.icon} text-brand-blue"></i> <span class="truncate">${league.name}</span></h3>
                 </div>`;
@@ -542,7 +538,7 @@
             });
         }
 
-        // ================= TỰ ĐỘNG ĐỐI SOÁT & TRẢ THƯỞNG =================
+        // TỰ ĐỘNG ĐỐI SOÁT & TRẢ THƯỞNG
         function resolveBetsAuto() {
             let history = JSON.parse(localStorage.getItem('betHistory')) || [];
             let isChanged = false; let wonAmt = 0; let lostCount = 0;
@@ -576,7 +572,7 @@
             }
         }
 
-        // ================= LOGIC MODAL =================
+        // LOGIC CHỐT KÈO VÀ MODAL
         window.openPredictionModal = function(sport, home, away, hOdds, dOdds, aOdds) {
             activeMatchData = { home, away }; activeBetChoice = null; activeBetOdds = 0;
             document.getElementById('modalSportBadge').textContent = sport;
@@ -673,7 +669,6 @@
             setTimeout(() => { m.classList.add('hidden'); m.classList.remove('flex'); }, 300);
         }
 
-        // Utils Modal
         window.showNotificationModal = function(t, m, ty) {
             const mod = document.getElementById('notificationModal'); const cnt = document.getElementById('notificationModalContent'); const icW = document.getElementById('notifIconWrapper'); const ic = document.getElementById('notifIcon');
             document.getElementById('notifTitle').textContent = t; document.getElementById('notifMessage').innerHTML = m;
